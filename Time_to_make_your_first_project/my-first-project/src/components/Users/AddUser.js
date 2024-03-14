@@ -11,8 +11,10 @@ const AddUser = () => {
   const ageInputRef=useRef();
   const clgNmameInputRef=useRef();
   const [error,setError]=useState("");
-  // console.log(enteredUserName,enteredAge)
-
+  const [data,setData]=useState([])
+  // console.log(nameInputRef.current.value,ageInputRef)
+  
+// console.log(data)
     const addUserHandler=(event)=>{
         event.preventDefault();
         
@@ -23,12 +25,16 @@ const AddUser = () => {
         if(enteredName.trim().length===0 || enteredAge.trim().length===0 || enteredClgName.trim().length===0){
             setError({
               title:"Invalid input",
-              message:"Please enter a valid username and age (non-empty values)."
+              message:"Please enter a valid username and age and college name (non-empty values)."
             })
             
         }
         else{
           setError("")
+          setData([...data,{name:nameInputRef.current.value,age:ageInputRef.current.value,college:clgNmameInputRef.current.value}])
+          nameInputRef.current.value="";
+          ageInputRef.current.value="";
+          clgNmameInputRef.current.value="";
         };
 
         if(enteredAge.trim().length>0 && Number(enteredAge)<1){
@@ -38,10 +44,7 @@ const AddUser = () => {
           })
         }
         
-        nameInputRef.current.value="";
-        ageInputRef.current.value="";
-        clgNmameInputRef.current.value="";
-       
+        
     };
 
 
@@ -72,6 +75,16 @@ const AddUser = () => {
 
     </form>
     </Card>
+    <ul style={{marginLeft:'100px' }}>
+      
+        {
+          data?.map((ele,index)=>(
+           
+              <li key={index}>{`${ele.name}-${ele.age}-${ele.college}`}</li>
+            
+          ))
+        }
+    </ul>
      </Wrapper>
   )
 }
