@@ -1,0 +1,19 @@
+
+.box{
+    margin-left: 20px;
+}
+
+.box label{
+    font-weight: bold;
+}
+
+.box input{
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.da div{
+    margin: 10px;
+    border: 1px solid black;
+    padding: 10px;
+}
