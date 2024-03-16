@@ -1,0 +1,30 @@
+
+.box{
+    margin: 10px;
+}
+
+.box input,.box select{
+    margin-right: 1rem;
+}
+
+.box label{
+    font-weight: 500;
+     
+}
+
+.box input{
+    font-weight: bold;
+    width: fit-content;
+}
+
+.box button{
+    background:rgb(62, 62, 184);
+    color: white;
+    border:none;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+}
+
+.box button:active{
+    background: rgb(219, 147, 14);
+}
