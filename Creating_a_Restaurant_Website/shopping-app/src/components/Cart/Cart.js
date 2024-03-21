@@ -12,11 +12,11 @@ const Cart = (props) => {
   const hasItems=cartCtx.items.length>0;
 
   const cartItemRemoveHandler=(id)=>{
-
+     cartCtx.removeItem(id);
   };
 
   const cartItemAddHandler=(item)=>{
-
+     cartCtx.addItem(item);
   };
 
   const cartitems=<ul className={styles['cart-items']}>{cartCtx.items.map((ele)=>{
@@ -28,7 +28,7 @@ const Cart = (props) => {
       {cartitems}
       <div className={styles.total}>
       <span>Total Amount</span>
-      <span>{totalAmount}</span>
+      <span>{totalAmount>0?`$${totalAmount}`:`${totalAmount}`}</span>
       </div>
       <div className={styles.actions}>
          <button className={styles['button--alt']} onClick={props.onClose}>Close</button>
