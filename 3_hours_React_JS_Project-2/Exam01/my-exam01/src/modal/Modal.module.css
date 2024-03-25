@@ -1,0 +1,36 @@
+
+.inner{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgb(189, 189, 189, 0.9);
+}
+
+.outer{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: #fff;
+    border-radius: 0.5rem;
+    /* border: 1px solid black; */
+    width: fit-content;
+    max-width: 50%;
+    height: fit-content;
+    max-height: 60%;
+    padding: 1rem;
+}
+
+.outer form label{
+    display: block;
+}
+
+.outer form input{
+    display:block;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    background: transparent;
+    max-width: 100%;
+}
