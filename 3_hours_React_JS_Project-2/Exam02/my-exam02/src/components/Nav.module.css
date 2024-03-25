@@ -1,0 +1,16 @@
+
+.box div{
+    border: 1px solid black;
+    width: fit-content;
+}
+
+.box cart{
+    display: flex;
+    margin-left: 100px;
+}
+
+.box{
+    display:  flex;
+    justify-content: space-between;
+    margin: 0 1rem 5rem 1rem;
+}
