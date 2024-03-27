@@ -25,13 +25,14 @@ const handleSubmit=(e)=>{
     lar:lRef.current.value,
     medium:mRef.current.value,
     small:sRef.current.value,
+    qty:1
   };
 
   // console.log(obj);
   axios.post("http://localhost:3000/data",obj)
   .then((res)=>{
     // console.log(res.data);
-    ctx.data=res.data;
+    ctx.render=res.data;
   })
 
 
@@ -51,11 +52,11 @@ const handleSubmit=(e)=>{
 
         <span>Quantuty available:</span>
         <label id='low'>L:</label>
-        <input style={{width:"2rem"}} id='low' type='number' ref={lRef}/>
+        <input style={{width:"2.3rem"}} id='low' type='number' ref={lRef}/>
         <label id='med'>M:</label>
-        <input style={{width:"2rem"}} id='med' type='number' ref={mRef}/>
+        <input style={{width:"2.3rem"}} id='med' type='number' ref={mRef}/>
         <label id='sm'>S:</label>
-        <input style={{width:"2rem"}} id='sm' type='number' ref={sRef}/>
+        <input style={{width:"2.3rem"}} id='sm' type='number' ref={sRef}/>
 
         <button type='submit'>Add Product</button>
       </form>

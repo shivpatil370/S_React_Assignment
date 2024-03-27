@@ -3,20 +3,42 @@
     {
       "name": "cotton",
       "desc": "good",
-      "price": "23",
-      "lar": "NaN",
-      "medium": "2",
-      "small": "-1",
-      "id": "b3a8"
+      "price": "20",
+      "lar": "66",
+      "medium": "62",
+      "small": "75",
+      "qty": 1,
+      "id": "8e0a"
     },
     {
       "name": "nilon",
       "desc": "average",
-      "price": "3",
-      "lar": "NaN",
-      "medium": "3",
-      "small": "0",
-      "id": "02a4"
+      "price": "10",
+      "lar": "88",
+      "medium": "80",
+      "small": "78",
+      "qty": 1,
+      "id": "0975"
+    },
+    {
+      "name": "chudidar",
+      "desc": "good",
+      "price": "23",
+      "lar": "98",
+      "medium": "81",
+      "small": "81",
+      "qty": 1,
+      "id": "9288"
+    },
+    {
+      "name": "shirt",
+      "desc": "avg",
+      "price": "35",
+      "lar": "97",
+      "medium": "98",
+      "small": "97",
+      "qty": 1,
+      "id": "0c41"
     }
   ]
 }
