@@ -1,0 +1,41 @@
+
+.box{
+    border: 1px  solid #d2d6de;
+    margin: 5rem 0 0 2rem;
+}
+
+.box ul li{
+    list-style: none;
+    font-size: large;
+    font-weight: bold;
+    padding: 1rem;
+}
+
+.box ul li:hover{
+    background-color: lightblue;
+}
+
+.box ul li:nth-child(odd){
+    background-color: lightgray;
+}
+
+.box h1{
+    text-align: center;
+    font-weight: bolder;
+    color: darkslategray;
+}
+
+.box ul li button:nth-child(1){
+    background-color: rgb(244,67,54);
+    padding: 0.5rem 1rem;
+    color: white;
+    border: none;
+    margin: 0 0.2rem;
+}
+
+.box ul li button:nth-child(2){
+    background-color: rgb(76,175,80);
+    padding: 0.5rem 1rem;
+    color: white;
+    border: none;
+}

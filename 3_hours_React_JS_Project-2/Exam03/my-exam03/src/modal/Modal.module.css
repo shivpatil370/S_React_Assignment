@@ -1,0 +1,30 @@
+
+.inner{
+    /* border: 1px solid black; */
+    width: fit-content;
+    padding: 2rem;
+    position: fixed;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: aliceblue;
+    border-radius: 0.5rem;
+}
+
+.inner label{
+  display: block;
+}
+
+.inner input{
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+.outer{
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgb(189, 189, 189, 0.9);
+}
