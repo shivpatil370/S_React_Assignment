@@ -4,6 +4,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import styles from "./Modal.module.css";
 import axios from "axios";
 import BookCartContext from "../context-api/BookContext";
+import ReactDOM from "react-dom";
 
 const Modal = ({onSetModal}) => {
     const nameRef=useRef();
@@ -91,7 +92,7 @@ axios.get(`https://crudcrud.com/api/5d394bb9d3e9433ab7cde044827ea88c/data/${ctx.
     }, [editname,editlink])
       
 
-  return (
+  return ReactDOM.createPortal(
     <div>
        <div onClick={()=>onSetModal(false)} className={styles.outer}></div>
 
@@ -107,7 +108,8 @@ axios.get(`https://crudcrud.com/api/5d394bb9d3e9433ab7cde044827ea88c/data/${ctx.
           </form>
        </div>
 
-    </div>
+    </div>,
+    document.querySelector(".ReactDOM")
   )
 }
 
