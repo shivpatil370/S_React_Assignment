@@ -9,14 +9,62 @@
 
 .form{
     /* border: 1px solid black; */
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     width: fit-content;
+    padding: 2rem;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%,0);
+    border-radius: 0.5rem;
+}
+
+.form label{
+    display: block;
+    font-weight: bold;
+}
+
+.form input{
+    display: block;
+    margin-bottom: 1rem;
+    width: 100%;
+    height: max-content;
+    border-radius: 5%;
+}
+
+.form input:hover{
+    background-color: lightgray;
 }
 
 .btn button,.form form button{
-    padding: 0.2rem 0.3rem;
+    padding: 0.4rem 0.6rem;
+    font-weight: bolder;
+}
+
+.form button{
+    background-color: rgb(0,140,186);
+    color: white;
+    border: none;
+    /* padding: 1rem, 5rem; */
+}
+
+.form button:active{
+    background-color: orange;
 }
 
 .btn{
-    font-size: large;
+    font-size: xx-large;
     font-weight: bolder;
+    background-color: rgb(104,204,167);
+    width: fit-content;
+    height: fit-content;
+    padding: 1rem;
+    border-radius: 40%;
+}
+
+.btn:active{
+    background-color: orange;
+}
+
+.btn:hover{
+    background-color: lightgreen;
 }

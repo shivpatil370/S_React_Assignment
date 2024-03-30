@@ -14,12 +14,63 @@
     transform: translate(-50%,-50%);
     background-color: #fff;
     padding: 2rem;
+    overflow-y: scroll;
+    border-radius: 0.5rem;
+    max-width: 70%;
+    max-height: 70%;
 }
 
 .inner ul li{
+    /* border: 1px solid lightsalmon; */
     list-style: none;
-    border: 1px solid black;
     padding: 1rem;
+    font-weight: bolder;
+    background-color: lightcyan;
+    margin-bottom: 0.5rem;
+}
+
+
+.inner ul li:hover{
+    background-color: lightgray;
+} 
+
+.inner h2, .inner h3{
+    text-align: center;
+}
+
+.inner ul li button{
+    padding: 0.1rem 0.4rem;
+    color: white;
+    font-weight: bolder;
+    font-size: larger;
+    background-color: rgb(4,170,109);
+    border: none;
+    margin: 0 0.1rem;
+}
+
+.inner ul li button:active{
+    background-color: orange;
+}
+
+.inner button{
+    background-color: red;
+    color: white;
+    padding: 0.3rem 0.5rem;
+}
+
+.inner button{
+    background-color: green;
+    color: white;
+    padding: 0.3rem 0.5rem;
+    border: none;
+    font-weight: bolder;
+}
+
+/* .btn{ */
+    /* margin-left: 10%; */
+/* } */
+.btn:active{
+    background-color: orange;
 }
 
 .outer{

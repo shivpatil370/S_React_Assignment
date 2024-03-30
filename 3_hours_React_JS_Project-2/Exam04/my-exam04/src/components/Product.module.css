@@ -14,3 +14,21 @@
     padding: 1rem;
     font-weight: bolder;
 }
+
+.box ul button{
+    /* background-color: rgb(244,67,54); */
+    padding: 0.3rem 0.6rem;
+    border: none;
+    color: white;
+    font-weight: bold;
+    margin: 0 0.5rem;
+    border-radius: 0.2rem;
+}
+
+.box ul li span{
+    margin: 0 0.3rem;
+}
+
+.box ul li:hover{
+    background-color: lightcyan;
+}

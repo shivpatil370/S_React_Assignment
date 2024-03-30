@@ -31,15 +31,22 @@ const MedicineForm = ({onSetTrue}) => {
 
    const PostData=async (obj)=>{
       try {
-          await axios.post("https://crudcrud.com/api/3c7f056389434a819fa9cfd02416032b/data",obj)
+          await axios.post("http://localhost:3000/data",obj)
           .then((res)=>{
             //  console.log(res.data)
             ctx.Addrender(res.data);
+
+    nameRef.current.value= "";
+    descRef.current.value="";
+    priceRef.current.value="";
+    qtyRef.current.value="";
           })
       } catch (error) {
         console.log(error)
       }
-   }
+   };
+
+ 
 
   return (
     <div className={styles.box}>
@@ -61,7 +68,7 @@ const MedicineForm = ({onSetTrue}) => {
             <button type="submit">Add Product</button>
          </form>
       </div>
-      <div className={styles.btn}><button onClick={()=>onSetTrue(true)}>cart</button>{ctx.Total}</div>
+      <div onClick={()=>onSetTrue(true)} className={styles.btn}>&#128722;{ctx.Total}</div>
     </div>
   )
 }

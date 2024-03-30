@@ -7,7 +7,7 @@ import MedicineContext from "../context-api/MedicineContext";
 const Product = () => {
     const [product, setProduct] = useState([]);
     const [check,setCheck]=useState([]);
-    const [msg,setMsg]=useState(false)
+    // const [msg,setMsg]=useState(false)
 
     const ctx=useContext(MedicineContext);
 
@@ -19,7 +19,7 @@ const Product = () => {
            
 
           let obj={
-            _id:ele._id,
+            id:id,
             name:ele.name,
             desc:ele.desc,
             price:ele.price,
@@ -32,9 +32,9 @@ const Product = () => {
     };
 
     const MyPost= async(obj,id)=>{
-       await axios.put(`https://crudcrud.com/api/3c7f056389434a819fa9cfd02416032b/data/${Number(id)}`,obj)
+       await axios.put(`http://localhost:3000/data/${id}`,obj)
           .then((res)=>{
-            console.log(res)
+            // console.log(res)
                setCheck(res.data);
           })
           .catch((err)=>{
@@ -44,7 +44,7 @@ const Product = () => {
 
 
      useEffect(() => {
-        axios.get("https://crudcrud.com/api/3c7f056389434a819fa9cfd02416032b/data")
+        axios.get("http://localhost:3000/data")
         .then((res)=>{
             // console.log(res.data);
             setProduct(res.data);
@@ -58,7 +58,10 @@ const Product = () => {
       <ul>
         {
             product.map((ele)=>{
-                return <li key={ele._id}>{`${ele.name}-${ele.desc}-${ele.price}-qty:${msg?"out of stock":ele.qty}`}<button onClick={()=>handleAddCart(ele,ele._id)}>Add to bill</button></li>
+                return <li key={ele.id}>{`${ele.name}-${ele.desc}-Rs:${ele.price}-`}
+                {ele.qty<1?<span style={{color:"red",fontWeight:"bolder"}}><span style={{color:"black"}}>qty:</span>out of stock</span>:
+                <span>{`qty:${ele.qty}`}</span>}
+                <button style={ele.qty<1?{backgroundColor:"lightgray"}:{backgroundColor:"rgb(244,67,54)"}} disabled={ele.qty<1?true:false} onClick={()=>handleAddCart(ele,ele.id)}>Add to bill</button></li>
             })
         }
       </ul>
