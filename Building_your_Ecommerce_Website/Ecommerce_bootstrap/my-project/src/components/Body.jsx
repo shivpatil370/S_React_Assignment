@@ -1,8 +1,9 @@
 // import React from 'react'
 
-import { Button, Card, CardBody, CardGroup, Col, Container, Row } from "react-bootstrap"
+import { Button, Card, Col, Row } from "react-bootstrap";
+import styles from "./Body.module.css";
 
-const Body = () => {
+const Body = ({setShow}) => {
 
     const productsArr = [
 
@@ -55,32 +56,38 @@ const Body = () => {
             <h1 style={{textAlign:"center", color:"white", padding:"0.1rem 0 3rem 0", fontSize:"5rem", fontFamily:"-moz-initial", fontWeight:"bolder"}}>The Generics</h1>
         </header>
          
+        
+
          <main>
-         <Container fluid>
-            <h1 style={{textAlign:"center",color:"white"}}>MUSIC</h1>
-            <Row  xs={1} md={2} className="row w-75 m-auto">
-              {
-                productsArr.map((ele,index)=>{
-                      return <Col key={index} sm={12} md={6} className="col mb-5">
-                            <div className="card p-3 bg-dark" >
-                              <h3 style={{color:"white"}}>{ele.title}</h3>
-                              <img style={{margin:"1rem 0 1rem 0",width:'50%'}} src={ele.imageUrl} alt={ele.title}/>
-                              <div className="div d-flex">
-                              <h3 style={{color:"white"}}>${ele.price}</h3>
-                              <Button className="btn ms-4">ADD TO CART</Button>
-                              </div>
-                            </div>
-                        </Col>
-                })
-              }
-              
-               
-            </Row>
-            <Button style={{display:"flex",margin:"auto",background:"none",border:"none",color:"skyblue"}}>See the cart</Button>
-        </Container>
+             <div className="box ms-5 me-5">
+                 <Card.Title as="h2" className="text-light text-center mt-5 font-monospace">MUSIC</Card.Title>
+                 <Row className="justify-content-md-center">
+                    {
+                      productsArr.map((ele,index)=>{
+                         return <Col key={index} sm={6}>
+                                    <Card className="d-inline bg-dark text-bg-danger text-center">
+                                        <Card.Title as="h3">{ele.title}</Card.Title>
+
+                                       
+                                        <Card.Img variant="top" className="img-fluid w-50 d-lg-flex m-auto mb-4 mt-4" src={ele.imageUrl} alt={ele.title}/>
+                                      
+
+                                        <div className="d-flex w-50 justify-content-between m-auto">
+                                        <Card.Text as="h4">${ele.price}</Card.Text>
+                                        <Button>ADD TO CART</Button>
+                                        </div>
+                                    </Card>
+                                </Col>
+                      })
+                    }
+                 </Row>
+
+                 <Button onClick={()=>setShow(true)} style={{background:"gray", border:"none",display:"flex",margin:"auto",marginBottom:"4rem",marginTop:"2rem",color:"skyblue"}}>See the cart</Button>
+
+             </div>
          </main>
 
-         <footer style={{background:"rgb(14,133,170)",display:"flex",alignItems:"center",justifyContent:"space-between",padding:"0 3rem 0 3rem"}}>
+         <footer style={{background:"rgb(14,133,170)",display:"flex",alignItems:"center",justifyContent:"space-between",padding:"0 6rem 0 6rem"}}>
              <div className="foot ">
              <h1 style={{color:"white", padding:"2rem 0 2rem 0", fontSize:"3rem", fontFamily:"-moz-initial", fontWeight:"bolder"}}>The Generics</h1>
              </div>
