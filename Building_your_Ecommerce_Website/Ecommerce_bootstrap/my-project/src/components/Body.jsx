@@ -1,11 +1,11 @@
 // import React from 'react'
 
 import { Button, Card, Col, Row } from "react-bootstrap";
-// import styles from "./Body.module.css";
+import styles from "./Body.module.css";
 import { useContext } from "react";
 import AppContext from "../context-api/CartContext";
 
-const Body = ({setShow}) => {
+const Body = () => {
 
     const ctx=useContext(AppContext);
 
@@ -80,12 +80,12 @@ const Body = ({setShow}) => {
                  <Row className="justify-content-md-center">
                     {
                       productsArr.map((ele)=>{
-                         return <Col key={ele.id} sm={6}>
+                         return <Col key={ele.id} sm={5}>
                                     <Card className="d-inline bg-dark text-bg-danger text-center">
                                         <Card.Title style={{fontStyle:"-moz-initial"}} as="h4">{ele.title}</Card.Title>
 
                                        
-                                        <Card.Img variant="top" className="img-fluid w-50 d-lg-flex m-auto mb-4 mt-4" src={ele.imageUrl} alt={ele.title}/>
+                                        <Card.Img className={styles.img} variant="top" style={{width:"50%",display:"flex",margin:"auto",marginBottom:"1rem", marginTop:"1rem"}} src={ele.imageUrl} alt={ele.title}/>
                                       
 
                                         <div className="d-flex w-50 justify-content-between m-auto">
@@ -99,7 +99,7 @@ const Body = ({setShow}) => {
                  </Row>
 
                  <div className="pb-5">
-                 <Button onClick={()=>setShow(true)} style={{background:"gray", border:"none",display:"flex",margin:"auto",marginTop:"2rem",color:"skyblue"}}>See the cart</Button>
+                 <Button onClick={()=>ctx.setShow(true)} style={{background:"gray", border:"none",display:"flex",margin:"auto",marginTop:"2rem",color:"skyblue"}}>See the cart</Button>
                  </div>
 
              </div>

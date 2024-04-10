@@ -1,14 +1,23 @@
 // import React from 'react'
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Button,Card } from 'react-bootstrap';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import AppContext from '../../context-api/CartContext';
 
 const Canvas = ({show,setShow}) => {
 
     const ctx=useContext(AppContext)
 
-    const handleClose = () => setShow(false);
+    const handleClose = () =>{
+       setShow(false);
+       ctx.setShow(false);
+
+    }
+
+    // .......................................
+      useEffect(()=>{
+        setShow(ctx.Show);
+      },[ctx.Show])
 
 
   return (
@@ -36,7 +45,7 @@ const Canvas = ({show,setShow}) => {
                 })
               }
               <div className='d-flex justify-content-end me-3'>
-                <Card.Title style={{color:"gray",fontFamily:"-moz-initial"}}>Total:</Card.Title> <Card.Title style={{color:"gray",fontFamily:"-moz-initial"}}>${0}</Card.Title>
+                <Card.Title style={{color:"gray",fontFamily:"-moz-initial"}}>Total:</Card.Title> <Card.Title style={{color:"gray",fontFamily:"-moz-initial"}}>${ctx.totalPrice}</Card.Title>
               </div>
              </Card>
         <Button className='d-flex m-auto'>PURCHASE</Button>

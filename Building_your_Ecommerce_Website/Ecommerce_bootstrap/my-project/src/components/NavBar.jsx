@@ -14,13 +14,14 @@ const NavBar = ({show,setShow}) => {
    const ctx=useContext(AppContext);
     
   return (
-    <div>
+    
+    <div style={{position:"sticky",top:"0",zIndex:"1"}}>
         <Navbar bg="dark" variant="dark" className='navbar'>
             <Container>
                 <Nav className="m-auto gap-5">
-                  <Nav.Link style={{fontFamily:"-moz-initial"}} href="#home" className='text-white font-monospace'>HOME</Nav.Link>
-                  <Nav.Link style={{fontFamily:"-moz-initial"}} href="#store" className='text-white font-monospace'>STORE</Nav.Link>
-                  <Nav.Link style={{fontFamily:"-moz-initial"}} href="#about" className='text-white font-monospace'>ABOUT</Nav.Link>
+                  <Nav.Link style={{fontFamily:"-moz-initial"}} href="/" className='text-white font-monospace'>HOME</Nav.Link>
+                  <Nav.Link style={{fontFamily:"-moz-initial"}} href="store" className='text-white font-monospace'>STORE</Nav.Link>
+                  <Nav.Link style={{fontFamily:"-moz-initial"}} href="about" className='text-white font-monospace'>ABOUT</Nav.Link>
                 </Nav>
                 <Button onClick={()=>setShow(true)} className='btn btn-dark border pt-0 pb-1'>cart</Button>
                 <Badge bg="dark" text='info' style={{fontSize:"1rem",marginBottom:"1rem"}}>{ctx.Quantity}</Badge>
@@ -28,8 +29,10 @@ const NavBar = ({show,setShow}) => {
         </Navbar>
 
         <Canvas show={show} setShow={setShow}/>
+
         
     </div>
+      
   )
 }
 

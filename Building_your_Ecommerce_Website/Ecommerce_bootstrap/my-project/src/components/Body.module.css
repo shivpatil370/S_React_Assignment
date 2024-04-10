@@ -1,5 +1,10 @@
-
+/* w-50 d-lg-flex m-auto mb-4 mt-4 */
 img{
+    /* width:  40px;
+    display: flex;
+    margin: auto;
+    margin-bottom: 1rem;
+    margin-top: 1rem; */
     transition: all 0.5s linear;
 }
 img:hover{

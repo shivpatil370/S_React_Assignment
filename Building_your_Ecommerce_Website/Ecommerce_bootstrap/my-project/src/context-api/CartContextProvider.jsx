@@ -5,6 +5,8 @@ import AppContext from "./CartContext"
 const CartContextProvider = (props) => {
    const [cart, setCart] = useState([]);
    const [total,setTotal]=useState(0);
+   const [allPrice,setAllPrice]=useState(0);
+   const [sho,setSho]=useState(false);
 //    console.log(total)
 
     const handleData=(ele)=>{
@@ -23,7 +25,10 @@ const CartContextProvider = (props) => {
             allData[index]=updateval;
 
             const t=cart.reduce((acc,e)=>acc+e.qty,0);
-            setTotal(t)
+            setTotal(t);
+
+            const price=cart.reduce((acc,e)=>acc+e.price*e.qty,0);
+            setAllPrice(price);
         }
         else{
 
@@ -36,13 +41,25 @@ const CartContextProvider = (props) => {
 
     useEffect(()=>{
         const t=cart.reduce((acc,e)=>acc+e.qty,0);
-        setTotal(t)
-    },[cart])
+        setTotal(t);
+
+        const price=cart.reduce((acc,e)=>acc+e.price*e.qty,0);
+        setAllPrice(price);
+    },[cart]);
+
+
+    const setShowFun=(val)=>{
+        //  console.log(val);
+        setSho(val)
+    }
 
    const contextVal={
      data:cart,
      addData:handleData,
-     Quantity:total
+     Quantity:total,
+     totalPrice:allPrice,
+     setShow:setShowFun,
+     Show:sho
    }
 
   return (

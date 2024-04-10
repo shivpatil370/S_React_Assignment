@@ -2,7 +2,7 @@ import { createContext } from "react";
 
 const AppContext=createContext({
     data:[],
-    addData:()=>{}
+    addData:()=>{},
 });
 
 export default AppContext;
