@@ -2,10 +2,11 @@
 
 import { Button, Card, Col, Row } from "react-bootstrap";
 import styles from "./Body.module.css";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import AppContext from "../context-api/CartContext";
 
 const Body = () => {
+    const [loading,setLoading]=useState(false);
 
     const ctx=useContext(AppContext);
 
@@ -64,6 +65,7 @@ const Body = () => {
         }
         
         ]
+        
 
 
   return (
@@ -80,6 +82,7 @@ const Body = () => {
                  <Row className="justify-content-md-center">
                     {
                       productsArr.map((ele)=>{
+                        
                          return <Col key={ele.id} sm={5}>
                                     <Card className="d-inline bg-dark text-bg-danger text-center">
                                         <Card.Title style={{fontStyle:"-moz-initial"}} as="h4">{ele.title}</Card.Title>
