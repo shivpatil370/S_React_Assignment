@@ -23,7 +23,7 @@ const appRouter=createBrowserRouter([
          element:<About/>
         },
         {
-         path:"/store",
+         path:"/:store",
          element:<Body/>
         }
     ]

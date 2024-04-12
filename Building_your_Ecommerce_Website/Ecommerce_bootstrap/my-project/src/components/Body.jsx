@@ -9,7 +9,7 @@ const Body = () => {
     const [products,setProducts]=useState([]);
     const [loading,setLoading]=useState(true);
     const [err, setErr]=useState(false);
-    const [time,setTime]=useState(3);
+    const [time,setTime]=useState(5);
         //  console.log(products)
     const ctx=useContext(AppContext);
 
@@ -109,7 +109,7 @@ const Body = () => {
              window.location.reload()
             // }
             
-         },3000);
+         },5000);
 
 
          return ()=>{
@@ -125,7 +125,7 @@ const Body = () => {
 
 
   return loading?(<h1 style={{color:"orange",textAlign:"center",margin:"3rem 0 3rem 0"}}>Loading...</h1>):
-  err?(<h1 style={{color:"red", textAlign:"center"}}>...Retrying <Badge>{time}</Badge></h1>): (
+  err?(<h1 style={{color:"red", textAlign:"center",margin:"3rem 0 3rem 0"}}>...Retrying <Badge>{time}</Badge><Button className="bg-danger ms-2" onClick={()=>setErr(false)}>cancel</Button></h1>): (
       <div className="box bg-dark">
         <header style={{background:"rgb(119,119,119)"}} className="header w-100">
             <h1 style={{textAlign:"center", color:"white", padding:"0.1rem 0 3rem 0", fontSize:"5rem", fontFamily:"-moz-initial", fontWeight:"bolder"}}>The Generics</h1>

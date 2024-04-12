@@ -5,11 +5,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Canvas from './canvas/Canvas';
 import { useContext } from 'react';
 import AppContext from '../context-api/CartContext';
+import {useParams} from "react-router-dom";
 
 // import { useState } from 'react';
 
 
 const NavBar = ({show,setShow}) => {
+  const params=useParams();
+  const id=params;
+  // console.log(id.store)
   
    const ctx=useContext(AppContext);
     
@@ -23,8 +27,11 @@ const NavBar = ({show,setShow}) => {
                   <Nav.Link style={{fontFamily:"-moz-initial"}} href="store" className='text-white font-monospace'>STORE</Nav.Link>
                   <Nav.Link style={{fontFamily:"-moz-initial"}} href="about" className='text-white font-monospace'>ABOUT</Nav.Link>
                 </Nav>
+
+                {id.store&&<div>
                 <Button onClick={()=>setShow(true)} className='btn btn-dark border pt-0 pb-1'>cart</Button>
                 <Badge bg="dark" text='info' style={{fontSize:"1rem",marginBottom:"1rem"}}>{ctx.Quantity}</Badge>
+                </div>}
             </Container>
         </Navbar>
 

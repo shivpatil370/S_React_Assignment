@@ -6,18 +6,9 @@ const Home = () => {
   const [products,setProducts]=useState([]);
   const [loading,setLoading]=useState(true);
   const [err, setErr]=useState(false);
-  const [time,setTime]=useState(3);
+  const [time,setTime]=useState(5);
 
-      // let products=[
-      //   {id:1, day:"JUL16", name:"DETROIT, MI", location:"DTE ENERGY MUSIC THEATRE"},
-      //   {id:2, day:"JUL19", name:"TORONTO,ON", location:"BUDWEISER STAGE"},
-      //   {id:3, day:"JUL22", name:"BRISTOW, VA", location:"JIGGY LUBE LIVE"},
-      //   {id:4, day:"JUL29", name:"PHOENIX, AZ", location:"AK-CHIN PAVILION"},
-      //   {id:5, day:"AUG2", name:"LAS VEGAS, NV", location:"T-MOBILE ARENA"},
-      //   {id:6, day:"AUG7", name:"CONCORD, CA", location:"CONCORD PAVILION"}
-      // ]
-
-
+     
 
 
 
@@ -61,7 +52,7 @@ const Home = () => {
              window.location.reload()
             // }
             
-         },3000);
+         },5000);
 
 
          return ()=>{
@@ -80,7 +71,7 @@ const Home = () => {
          
 
   return  loading?(<h1 style={{color:"orange",textAlign:"center",margin:"3rem 0 3rem 0"}}>Loading...</h1>):
-  err?(<h1 style={{color:"red", textAlign:"center"}}>...Retrying <Badge>{time}</Badge></h1>):
+  err?(<h1 style={{color:"red", textAlign:"center",margin:"3rem 0 3rem 0"}}>...Retrying <Badge>{time}</Badge><Button className="bg-danger ms-2" onClick={()=>setErr(false)}>cancel</Button></h1>):
   (
         <div style={{backgroundColor:"rgb(119,119,119)"}}>
          <header style={{background:"rgb(119,119,119)"}} className="header w-100">
