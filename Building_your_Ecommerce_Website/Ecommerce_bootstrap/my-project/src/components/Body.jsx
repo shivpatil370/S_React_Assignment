@@ -1,74 +1,131 @@
 // import React from 'react'
 
-import { Button, Card, Col, Row } from "react-bootstrap";
+import { Button, Card, Col, Row, Badge } from "react-bootstrap";
 import styles from "./Body.module.css";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AppContext from "../context-api/CartContext";
 
 const Body = () => {
-    const [loading,setLoading]=useState(false);
-
+    const [products,setProducts]=useState([]);
+    const [loading,setLoading]=useState(true);
+    const [err, setErr]=useState(false);
+    const [time,setTime]=useState(3);
+        //  console.log(products)
     const ctx=useContext(AppContext);
 
-    const productsArr = [
+    // const productsArr = [
 
-        {
-        id:1,
+    //     {
+    //     id:1,
         
-        title: 'Colors',
+    //     title: 'Colors',
         
-        price: 100,
+    //     price: 100,
         
-        imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%201.png',
+    //     imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%201.png',
 
-        qty:1
+    //     qty:1
         
-        },
+    //     },
         
-        {
-        id:2,
+    //     {
+    //     id:2,
         
-        title: 'Black and white Colors',
+    //     title: 'Black and white Colors',
         
-        price: 50,
+    //     price: 50,
         
-        imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%202.png',
+    //     imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%202.png',
 
-        qty:1
+    //     qty:1
         
-        },
+    //     },
         
-        {
-        id:3,
+    //     {
+    //     id:3,
         
-        title: 'Yellow and Black Colors',
+    //     title: 'Yellow and Black Colors',
         
-        price: 70,
+    //     price: 70,
         
-        imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%203.png',
+    //     imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%203.png',
 
-        qty:1
+    //     qty:1
         
-        },
+    //     },
         
-        {
-        id:4,
+    //     {
+    //     id:4,
         
-        title: 'Blue Color',
+    //     title: 'Blue Color',
         
-        price: 100,
+    //     price: 100,
         
-        imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%204.png',
+    //     imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%204.png',
 
-        qty:1
+    //     qty:1
         
+    //     }
+        
+    //     ]
+
+    useEffect(()=>{
+        fetch("http://localhost:3000/productsArr")
+        .then((res)=>{
+            setLoading(true)
+            return res.json();
+          })
+          .then((data)=>{
+            // console.log(data);
+            setProducts(data);
+            // setLoading(false)
+          })
+          .catch((err)=>{
+            setErr(true)
+            console.log(err);
+          })
+          .finally(()=>{
+            setLoading(false)
+            // setErr(false)
+          })
+      },[]);
+
+
+
+    
+      useEffect(()=>{
+                
+                if(err==true){
+
+          let timeout=setInterval(()=>{
+                    setTime((pre)=>{
+                      return Number(pre)-1
+                    })
+                  },1000);
+
+         let interval=setInterval(()=>{
+          //  if(err===true){
+             console.log(err)
+             window.location.reload()
+            // }
+            
+         },3000);
+
+
+         return ()=>{
+          clearInterval(timeout);
+            clearInterval(interval);
+         }
         }
-        
-        ]
+
+
+
+      },[err])
         
 
 
-  return (
+  return loading?(<h1 style={{color:"orange",textAlign:"center",margin:"3rem 0 3rem 0"}}>Loading...</h1>):
+  err?(<h1 style={{color:"red", textAlign:"center"}}>...Retrying <Badge>{time}</Badge></h1>): (
       <div className="box bg-dark">
         <header style={{background:"rgb(119,119,119)"}} className="header w-100">
             <h1 style={{textAlign:"center", color:"white", padding:"0.1rem 0 3rem 0", fontSize:"5rem", fontFamily:"-moz-initial", fontWeight:"bolder"}}>The Generics</h1>
@@ -81,7 +138,7 @@ const Body = () => {
                  <Card.Title as="h2" className="text-light text-center mt-5 font-monospace">MUSIC</Card.Title>
                  <Row className="justify-content-md-center">
                     {
-                      productsArr.map((ele)=>{
+                      products.map((ele)=>{
                         
                          return <Col key={ele.id} sm={5}>
                                     <Card className="d-inline bg-dark text-bg-danger text-center">
