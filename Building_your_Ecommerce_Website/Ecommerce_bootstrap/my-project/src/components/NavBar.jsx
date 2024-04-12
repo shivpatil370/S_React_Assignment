@@ -34,7 +34,7 @@ const NavBar = ({show,setShow}) => {
                 </div>}
             </Container>
         </Navbar>
-
+        
         <Canvas show={show} setShow={setShow}/>
 
         
