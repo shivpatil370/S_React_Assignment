@@ -9,6 +9,25 @@ const MyButton = ({setFdata,setData}) => {
     const [title,setTitle]=useState("");
     const [openingText,setOpeningText]=useState("");
     const [releaseDate,setReleaseDate]=useState("");
+
+    const postFun=async (obj)=>{
+      const res=await fetch("https://react-https-77d73-default-rtdb.firebaseio.com/films.json",{
+          method:"POST",
+          body:JSON.stringify(obj),
+          headers:{
+            "Content-Type":"application/json"
+          }
+        })
+
+          const data=await res.json();
+          console.log(data)
+          setData(data)
+       
+
+        setTitle("")
+        setOpeningText("")
+        setReleaseDate("")
+    }
     
     const handleSubmit=(e)=>{
         e.preventDefault();
@@ -20,15 +39,12 @@ const MyButton = ({setFdata,setData}) => {
         };
         // console.log(obj)
 
-        setData((prev)=>{
-            return [...prev,obj]
-        })
+       postFun(obj)
 
-        setTitle("")
-        setOpeningText("")
-        setReleaseDate("")
+    };
 
-    }
+
+
 
   return (
     <div>

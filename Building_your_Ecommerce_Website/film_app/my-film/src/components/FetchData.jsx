@@ -10,13 +10,23 @@ const FetchData = ({fdata,setData,data}) => {
 
       useEffect(()=>{
         setErr(false)
-        fetch('https://swapi.dev/api/films')
+        fetch('https://react-https-77d73-default-rtdb.firebaseio.com/films.json')
         .then((res)=>{
             return res.json();
         })
         .then((deta)=>{
-            // console.log(deta.results)
-            setData(deta.results)
+            console.log(deta);
+
+                let arr=[];
+            for(let key in deta){
+             let ob={ "episode_id":key,
+              "title":deta[key].title,
+              "opening_crawl":deta[key].opening_crawl,
+              "release_date":deta[key].opening_crawl}
+              arr.push(ob);
+            };
+
+            setData(arr)
         })
         .catch((err)=>{
             setErr(true)
@@ -31,7 +41,7 @@ const FetchData = ({fdata,setData,data}) => {
     
       { fdata&& <section>
         {
-            data.map((ele)=>{
+            data?.map((ele)=>{
                 return <Card key={ele.episode_id} className=" w-75 m-auto p-3 mb-4 mt-2">
                       <Card.Title>{ele.title}</Card.Title>
                       <Card.Text>{ele.opening_crawl}</Card.Text>
