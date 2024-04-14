@@ -1,7 +1,7 @@
 // import React from 'react'
-import {Card} from "react-bootstrap"
+import {Button, Card} from "react-bootstrap"
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 
 const FetchData = ({fdata,setData,data}) => {
@@ -15,7 +15,7 @@ const FetchData = ({fdata,setData,data}) => {
             return res.json();
         })
         .then((deta)=>{
-            console.log(deta);
+            // console.log(deta);
 
                 let arr=[];
             for(let key in deta){
@@ -32,8 +32,29 @@ const FetchData = ({fdata,setData,data}) => {
             setErr(true)
             throw new err("something went wrong!")
         })
-      },[])
+      },[data])
 
+
+
+         const MyDelete=useCallback ( async (ele)=>{
+              
+            const res=await fetch(`https://react-https-77d73-default-rtdb.firebaseio.com/films/${ele.episode_id}.json`,{
+               method:"DELETE",
+             });
+
+             if(!res.ok){
+              throw new Error("someyhing went wrong in delete operation!");
+             }
+             
+            //  const data=await res.json();
+            //  console.log(data)
+             
+         },[]);
+
+      const handleDelete=(ele)=>{
+        // console.log(ele)
+           MyDelete(ele)
+      }
 
 
   return err?<h1 className="text-center">something went wrong!</h1>:(
@@ -46,6 +67,7 @@ const FetchData = ({fdata,setData,data}) => {
                       <Card.Title>{ele.title}</Card.Title>
                       <Card.Text>{ele.opening_crawl}</Card.Text>
                       <Card.Text>{ele.release_date}</Card.Text>
+                      <Button onClick={()=>handleDelete(ele)} className="bg-danger w-25">DELETE</Button>
                 </Card>
             })
         }

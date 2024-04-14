@@ -19,9 +19,25 @@ const MyButton = ({setFdata,setData}) => {
           }
         })
 
+        if(!res.ok){
+          throw new Error("something went wrong!")
+        }
+
           const data=await res.json();
-          console.log(data)
-          setData(data)
+          // console.log(data)
+          // let arr=[];
+            for(let key in data){
+             let ob={ "episode_id":key,
+              "title":data[key].title,
+              "opening_crawl":data[key].opening_crawl,
+              "release_date":data[key].opening_crawl}
+              // arr.push(ob);
+              setData((prev)=>{
+                return [...prev, ob];
+              })
+            };
+
+            
        
 
         setTitle("")
@@ -32,6 +48,10 @@ const MyButton = ({setFdata,setData}) => {
     const handleSubmit=(e)=>{
         e.preventDefault();
         
+        if(title=="" || openingText=="" || releaseDate==""){
+          alert("please fill all data!")
+        }
+        else{
         let obj={
             title: title,
             opening_crawl: openingText,
@@ -40,6 +60,7 @@ const MyButton = ({setFdata,setData}) => {
         // console.log(obj)
 
        postFun(obj)
+      }
 
     };
 
