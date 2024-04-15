@@ -6,6 +6,9 @@ import './App.css'
 import Welcome from "./components/Welcome"
 import Products from "./components/Products"
 import Navbar from "./components/Navbar"
+import ProductDetail from "./components/ProductDetail"
+import About from "./components/About"
+import { Redirect, Switch } from "react-router-dom/cjs/react-router-dom.min"
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -13,12 +16,23 @@ function App() {
   return (
     <>
     <Navbar/>
+    <Switch>
+      <Route path="/" exact>
+        <Redirect to="/product"/>
+      </Route>
       <Route path="/welcome">
             <Welcome/>
       </Route>
       <Route path="/about">
+        <About/>
+      </Route>
+      <Route path="/product" exact>
             <Products/>
       </Route>
+      <Route path="/product/:productId">
+         <ProductDetail/>
+      </Route>
+      </Switch>
     </>
   )
 }
