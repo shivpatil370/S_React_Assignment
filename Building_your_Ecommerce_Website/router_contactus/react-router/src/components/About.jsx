@@ -1,9 +1,11 @@
 // import React from 'react'
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { Prompt } from 'react-router-dom';
 
 const Products = () => {
+    const [userEntering,setUserEntering]=useState(false);
   const nameRef=useRef();
   const emailRef=useRef();
   const phoneRef=useRef();
@@ -41,15 +43,25 @@ const Products = () => {
 
       addUser(newUser)
       
+   };
+
+
+   const handleUserEntering=()=>{
+       setUserEntering(true);
+   };
+
+   const handleEntering=()=>{
+       setUserEntering(false);
    }
    
 
   return (
     <div className='w-25 border p-3 m-auto mt-4 bg-light'>
+        <Prompt when={userEntering} message={(location)=>"are u sure want to leave page? Data wii be lost!"}/>
          <Form onSubmit={handleSubmit}>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Name</Form.Label>
-        <Form.Control type="text" placeholder="Enter Name" ref={nameRef} required/>
+        <Form.Control onFocus={handleUserEntering} type="text" placeholder="Enter Name" ref={nameRef} required/>
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -61,7 +73,7 @@ const Products = () => {
         <Form.Label>Phone Number</Form.Label>
         <Form.Control type="number" placeholder="Enter phone" ref={phoneRef} required/>
       </Form.Group>
-      <Button variant="primary" type="submit">
+      <Button onClick={handleEntering} variant="primary" type="submit">
         Submit
       </Button>
     </Form>

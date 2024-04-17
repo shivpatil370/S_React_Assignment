@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar"
 import ProductDetail from "./components/ProductDetail"
 import About from "./components/About"
 import { Redirect, Switch } from "react-router-dom/cjs/react-router-dom.min"
+import "./components/Nav.css"
 
 function App() {
   // const [count, setCount] = useState(0)
