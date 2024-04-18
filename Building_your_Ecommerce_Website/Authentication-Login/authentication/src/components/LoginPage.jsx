@@ -2,7 +2,8 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
+import AuthContext from '../store/auth-context';
 
 const LoginPage = () => {
     const [isLogin,setIsLogin]=useState(false);
@@ -10,6 +11,9 @@ const LoginPage = () => {
     const [loading,setLoading]=useState(false);
   const emailRef=useRef();
   const passwordRef=useRef();
+
+  const ctx=useContext(AuthContext);
+  // console.log("user logged:-",ctx.isLoggedIn)
 
 const handleSubmit=(e)=>{
     e.preventDefault();
@@ -45,8 +49,9 @@ const handleSubmit=(e)=>{
               }
               else{
                 return res.json().then((data)=>{
-                    console.log(data)
+                    console.log(data.idToken)
                     // setIsLogin(true);
+                    ctx.Login(data.idToken);
                     setLoading(false);
                     emailRef.current.value="";
                     passwordRef.current.value="";
@@ -54,9 +59,7 @@ const handleSubmit=(e)=>{
                 })
               }
         })
-        .then((data)=>{
-          console.log(data)
-        })
+       
         .catch((err)=>{
           setErr(false)
           setLoading(false)

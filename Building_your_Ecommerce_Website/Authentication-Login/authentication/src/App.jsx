@@ -2,13 +2,16 @@
 
 import './App.css'
 import LoginPage from './components/LoginPage'
+import Navbar from './components/Navbar'
+import { Outlet } from "react-router-dom";
 
 function App() {
   // const [count, setCount] = useState(0)
 
   return (
     <>
-      <LoginPage/>
+      <Navbar/>
+      <Outlet/>
     </>
   )
 }
