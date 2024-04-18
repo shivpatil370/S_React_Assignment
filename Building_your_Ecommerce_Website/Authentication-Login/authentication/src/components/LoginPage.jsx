@@ -7,6 +7,7 @@ import { useRef, useState } from 'react';
 const LoginPage = () => {
     const [isLogin,setIsLogin]=useState(false);
     const [err,setErr]=useState("");
+    const [loading,setLoading]=useState(false);
   const emailRef=useRef();
   const passwordRef=useRef();
 
@@ -14,9 +15,56 @@ const handleSubmit=(e)=>{
     e.preventDefault();
 
     if(isLogin){
-        //
+      setLoading(true);
+        fetch("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCzVFWq-_u_t4fNs0LS1Gu3BBUImY0bV98",{
+            method:"POST",
+            body:JSON.stringify({
+                email:emailRef.current.value,
+                password:passwordRef.current.value,
+                returnSecureToken:true
+            }),
+            headers:{
+                "Content-Type":"application/json"
+            }
+        })
+        .then((res)=>{
+              if(!res.ok){
+                //
+                return res.json().then((err)=>{
+                    // console.log("Error is:-",err.error.message)
+                      // if(err&&err.error&&err.error.message){
+
+                      //     setErr(err.error.message)
+                      // }
+                      // else{
+                      //    setErr("Authentication failed!")
+                      // }
+                      // setErr(false)
+                    throw new Error("Authentication failed!")
+                })
+              }
+              else{
+                return res.json().then((data)=>{
+                    console.log(data)
+                    // setIsLogin(true);
+                    setLoading(false);
+                    emailRef.current.value="";
+                    passwordRef.current.value="";
+                    setErr("");
+                })
+              }
+        })
+        .then((data)=>{
+          console.log(data)
+        })
+        .catch((err)=>{
+          setErr(false)
+          setLoading(false)
+          alert(err.message)
+        })
     }
     else{
+      setLoading(true);
         fetch("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCzVFWq-_u_t4fNs0LS1Gu3BBUImY0bV98",{
             method:"POST",
             body:JSON.stringify({
@@ -40,6 +88,7 @@ const handleSubmit=(e)=>{
                       else{
                          setErr("Authentication failed!")
                       }
+                      setLoading(false);
                     alert("Login with existing account")
                 })
               }
@@ -47,6 +96,10 @@ const handleSubmit=(e)=>{
                 return res.json().then((data)=>{
                     console.log(data)
                     setIsLogin(true);
+                    setLoading(false);
+                    emailRef.current.value="";
+                    passwordRef.current.value="";
+                    setErr("");
                 })
               }
         })
@@ -58,7 +111,7 @@ const handleSubmit=(e)=>{
 
   return (
     <div className='w-25 p-3 bg-light m-auto mt-5'>
-       {isLogin?<h1>Log In</h1>:<h1>Sign Up</h1>}
+       {isLogin?<h1 style={{textAlign:"center"}}>Log In</h1>:<h1 style={{textAlign:"center"}}>Sign Up</h1>}
          <Form onSubmit={handleSubmit}>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
@@ -72,13 +125,13 @@ const handleSubmit=(e)=>{
 
       {err&&<h6 style={{color:"red"}}>{err}</h6>}
       
-      <Button variant="primary" type="submit">
+      {loading?<p style={{textAlign:"center",color:"orange"}}>Sending Request...</p>:<Button style={{display:"flex",margin:"auto",marginBottom:"1rem"}} variant="primary" type="submit">
         {isLogin?"Login":"Create Account"}
-      </Button>
+      </Button>}
 
       
     </Form>
-    {<p onClick={()=>setIsLogin(!isLogin)} style={isLogin?{color:"red"}:{color:"blue"}}>{isLogin?"Create New Account":"Login with existing account"}</p>}
+    {<p onClick={()=>setIsLogin(!isLogin)} style={isLogin?{color:"red",textAlign:"center"}:{color:"blue",textAlign:"center"}}>{isLogin?"Create New Account":"Login with existing account"}</p>}
     </div>
   )
 }
