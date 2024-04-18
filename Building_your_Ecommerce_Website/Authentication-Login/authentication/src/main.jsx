@@ -6,6 +6,7 @@ import { AuthContextProvider } from './store/auth-context.jsx'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Profile from './components/Profile.jsx'
 import LoginPage from './components/LoginPage.jsx'
+import Welcome from './components/Welcome.jsx'
 
 const appRouter=createBrowserRouter([
   {
@@ -13,6 +14,7 @@ const appRouter=createBrowserRouter([
     element:<App/>,
     children:[
       {path:"/" , element:<LoginPage/>},
+      {path:"/login" , element:<Welcome/>},
       {path:"/profile" , element:<Profile/>}
     ]
   }

@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useContext, useRef, useState } from 'react';
 import AuthContext from '../store/auth-context';
+import {useNavigate} from "react-router-dom";
 
 const LoginPage = () => {
     const [isLogin,setIsLogin]=useState(false);
@@ -14,6 +15,7 @@ const LoginPage = () => {
 
   const ctx=useContext(AuthContext);
   // console.log("user logged:-",ctx.isLoggedIn)
+  const navigate =useNavigate()
 
 const handleSubmit=(e)=>{
     e.preventDefault();
@@ -49,9 +51,10 @@ const handleSubmit=(e)=>{
               }
               else{
                 return res.json().then((data)=>{
-                    console.log(data.idToken)
+                    // console.log(data.idToken)
                     // setIsLogin(true);
                     ctx.Login(data.idToken);
+                    navigate("/login");
                     setLoading(false);
                     emailRef.current.value="";
                     passwordRef.current.value="";
