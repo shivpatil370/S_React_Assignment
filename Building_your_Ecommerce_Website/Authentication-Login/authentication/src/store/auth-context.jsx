@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 
 const AuthContext=createContext({
@@ -25,6 +25,20 @@ export const AuthContextProvider=(props)=>{
       setToken(null);
       localStorage.removeItem("token");
   };
+
+//   ...............................................
+              
+  useEffect(()=>{
+      let timer=setTimeout(()=>{
+          localStorage.removeItem("token");
+          setToken(null);
+      },5000);
+
+      return ()=>{
+         clearTimeout(timer)
+      }
+  },[]);
+//   '''''''''''''''''''''''''''''''''''''''''''''''''
 
   const contextValue={
     token:tokens,
