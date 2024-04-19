@@ -7,7 +7,11 @@ const CartContextProvider = (props) => {
    const [total,setTotal]=useState(0);
    const [allPrice,setAllPrice]=useState(0);
    const [sho,setSho]=useState(false);
+   const localtoken=localStorage.getItem("tkn");
+   const [token,setToken]=useState(localtoken);
 //    console.log(total)
+
+       const islogged=!!token;
 
     const handleData=(ele)=>{
     //    console.log(ele)
@@ -51,7 +55,22 @@ const CartContextProvider = (props) => {
     const setShowFun=(val)=>{
         //  console.log(val);
         setSho(val)
-    }
+    };
+
+
+    const handleLogin=(token)=>{
+        setToken(token);
+        // console.log(token)
+        localStorage.setItem("tkn",token)
+    };
+
+    const handleLogOut=()=>{
+        setToken("");
+        localStorage.removeItem("tkn");
+    };
+
+
+   // console.log(cart);
 
    const contextVal={
      data:cart,
@@ -59,7 +78,11 @@ const CartContextProvider = (props) => {
      Quantity:total,
      totalPrice:allPrice,
      setShow:setShowFun,
-     Show:sho
+     Show:sho,
+     Token:token,
+     isLogin:islogged,
+     Login:handleLogin,
+     LogOut:handleLogOut
    }
 
   return (
