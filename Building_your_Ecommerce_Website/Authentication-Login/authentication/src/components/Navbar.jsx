@@ -11,6 +11,7 @@ const Navbar = () => {
 
   const handlelogout=()=>{
       ctx.LogOut()
+      ctx.Login("")
     navigate("/")
   }
 
