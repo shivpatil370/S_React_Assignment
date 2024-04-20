@@ -9,6 +9,10 @@ const CartContextProvider = (props) => {
    const [sho,setSho]=useState(false);
    const localtoken=localStorage.getItem("tkn");
    const [token,setToken]=useState(localtoken);
+   const [totalqty,setTotalqty]=useState(0)
+
+   const localMail=localStorage.getItem("email");
+   const [gmail,setGmail]=useState(localMail);
 //    console.log(total)
 
        const islogged=!!token;
@@ -58,18 +62,24 @@ const CartContextProvider = (props) => {
     };
 
 
-    const handleLogin=(token)=>{
+    const handleLogin=(token,mail)=>{
         setToken(token);
+        setGmail(mail)
         // console.log(token)
         localStorage.setItem("tkn",token)
+        localStorage.setItem("email",mail)
     };
 
     const handleLogOut=()=>{
         setToken("");
         localStorage.removeItem("tkn");
+        localStorage.removeItem("email");
     };
 
-
+    const handleQty=(qty)=>{
+        console.log(qty)
+        setTotalqty(qty)
+    }
    // console.log(cart);
 
    const contextVal={
@@ -80,9 +90,12 @@ const CartContextProvider = (props) => {
      setShow:setShowFun,
      Show:sho,
      Token:token,
+     UserMail:gmail,
      isLogin:islogged,
      Login:handleLogin,
-     LogOut:handleLogOut
+     LogOut:handleLogOut,
+     Quantitys:totalqty,
+     CartTotal:handleQty
    }
 
   return (

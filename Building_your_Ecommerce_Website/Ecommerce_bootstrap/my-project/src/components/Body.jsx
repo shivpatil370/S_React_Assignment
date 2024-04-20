@@ -10,6 +10,8 @@ const Body = () => {
     const [loading,setLoading]=useState(true);
     const [err, setErr]=useState(false);
     const [time,setTime]=useState(5);
+    const [deta,setDeta]=useState([]);
+    // const [data,setData]=useState([]);
         //  console.log(products)
     const ctx=useContext(AppContext);
 
@@ -120,7 +122,115 @@ const Body = () => {
 
 
 
-      },[err])
+      },[err]);
+
+
+      useEffect(()=>{
+        let mail=ctx.UserMail.replace(/[@.]/g,"");
+           fetch(`https://crudcrud.com/api/d41467106ee54d15a31a769d63e9f811/cart${mail}`)
+          .then((res)=>{
+            return res.json();
+          })
+          .then((detas)=>{
+          //  console.log(detas)
+            setDeta(detas);
+          })
+         
+      },[ctx.data]);
+
+      
+
+
+      const MyFun=async (useremailid,ele)=>{
+         try {
+
+          const res=await fetch(`https://crudcrud.com/api/d41467106ee54d15a31a769d63e9f811/cart${useremailid}`,{
+          method:"POST",
+          body:JSON.stringify(ele),
+          headers:{
+            "Content-Type":"application/json"
+          }
+        })
+          const datas=await res.json();
+          // console.log(datas);
+          ctx.addData(datas)
+          let qty=deta.reduce((acc,ele)=>Number(acc)+(Number(ele.qty)),0);
+          ctx.CartTotal(qty)
+    // console.log(qty);
+          // setDeta(datas);
+         } catch (error) {
+             console.log(error)
+         }
+      };
+
+      const MyFunCrud=async (useremailid,newdata,id)=>{
+           console.log(useremailid,newdata,id);
+        try {
+
+         const res=await fetch(`https://crudcrud.com/api/d41467106ee54d15a31a769d63e9f811/cart${useremailid}/${id}`,{
+         method:"PUT",
+         body:JSON.stringify({
+           id:newdata.id,
+           title:newdata.title,
+           imageUrl:newdata.imageUrl,
+           price:newdata.price,
+           qty:Number(newdata.qty)
+         }),
+         headers:{
+           "Content-Type":"application/json"
+         }
+       })
+         const datas=await res.json();
+        //  console.log(datas);
+         ctx.addData(datas)
+         let qty=deta.reduce((acc,ele)=>Number(acc)+(Number(ele.qty)),0);
+         ctx.CartTotal(qty)
+    // console.log(qty);
+        //  setDeta(datas);
+        } catch (error) {
+            console.log(error)
+        }
+     }
+// console.log(deta)
+//   ADD CART ITEMS TO db
+      const AddtoCartFun=(ele)=>{
+        // console.log(ele)
+        ctx.addData(ele);
+        let emailId=(ctx.UserMail);
+        let mail=emailId.replace(/[@.]/g,"");
+        // console.log(mail)
+
+           if(mail){ 
+            //  console.log(ele)
+               let index=deta.findIndex((el)=>el.id==ele.id);
+              //  console.log(index)
+              const currentIndex=deta[index];
+              // console.log(currentIndex)
+              if(currentIndex){
+                let newdata={
+                  ...currentIndex,
+                  qty:Number(currentIndex.qty+1)
+                }
+                // console.log(newdata)
+                MyFunCrud(mail,newdata,newdata._id)
+              }
+              else{
+
+                MyFun(mail,ele)
+              }
+            
+      }
+             
+      };
+
+
+      
+
+   useEffect(()=>{
+    let qty=deta.reduce((acc,ele)=>Number(acc)+(Number(ele.qty)),0);
+    // console.log(qty);
+    ctx.CartTotal(qty)
+ },[deta])
         
 
 
@@ -148,9 +258,9 @@ const Body = () => {
                                         <Card.Img className={styles.img} variant="top" style={{width:"50%",display:"flex",margin:"auto",marginBottom:"1rem", marginTop:"1rem"}} src={ele.imageUrl} alt={ele.title}/>
                                       
 
-                                        <div className="d-flex w-50 justify-content-between m-auto">
+                                        <div className="d-sm-inline d-md-flex w-50 justify-content-between m-auto">
                                         <Card.Text as="h5">${ele.price}</Card.Text>
-                                        <Button onClick={()=>ctx.addData(ele)}>ADD TO CART</Button>
+                                        <Button onClick={()=>AddtoCartFun(ele)}>ADD TO CART</Button>
                                         </div>
                                     </Card>
                                 </Col>

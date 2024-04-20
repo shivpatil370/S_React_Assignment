@@ -31,7 +31,7 @@ const NavBar = ({show,setShow}) => {
 
                 {id.store&&<div>
                 <Button onClick={()=>setShow(true)} className='btn btn-dark border pt-0 pb-1'>cart</Button>
-                <Badge bg="dark" text='info' style={{fontSize:"1rem",marginBottom:"1rem"}}>{ctx.Quantity}</Badge>
+                <Badge bg="dark" text='info' style={{fontSize:"1rem",marginBottom:"1rem"}}>{ctx.Quantitys}</Badge>
                 </div>}
                 {ctx.isLogin&&<button className='bg-danger ps-1 pe-1 text-white border mb-2' onClick={()=>ctx.LogOut()}>Logout</button>}
                 {!ctx.isLogin&&<button className='bg-success ps-1 pe-1 text-white border' onClick={()=>navigate("/")}>LogIn</button>}

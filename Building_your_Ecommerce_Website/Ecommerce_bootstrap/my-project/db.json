@@ -1,67 +1,71 @@
 {
-    "products":[
-        {"id":1, "day":"JUL16", "name":"DETROIT, MI", "location":"DTE ENERGY MUSIC THEATRE"},
-        {"id":2, "day":"JUL19", "name":"TORONTO,ON", "location":"BUDWEISER STAGE"},
-        {"id":3, "day":"JUL22", "name":"BRISTOW, VA", "location":"JIGGY LUBE LIVE"},
-        {"id":4, "day":"JUL29", "name":"PHOENIX, AZ", "location":"AK-CHIN PAVILION"},
-        {"id":5, "day":"AUG2", "name":"LAS VEGAS, NV", "location":"T-MOBILE ARENA"},
-        {"id":6, "day":"AUG7", "name":"CONCORD, CA", "location":"CONCORD PAVILION"}
-      ],
-
-
-      "productsArr" : [
-
-        {
-        "id":1,
-        
-        "title": "Colors",
-        
-        "price": 100,
-        
-        "imageUrl": "https://prasadyash2411.github.io/ecom-website/img/Album%201.png",
-
-        "qty":1
-        
-        },
-        
-        {
-        "id":2,
-        
-        "title": "Black and white Colors",
-        
-        "price": 50,
-        
-        "imageUrl": "https://prasadyash2411.github.io/ecom-website/img/Album%202.png",
-
-        "qty":1
-        
-        },
-        
-        {
-        "id":3,
-        
-        "title": "Yellow and Black Colors",
-        
-        "price": 70,
-        
-        "imageUrl": "https://prasadyash2411.github.io/ecom-website/img/Album%203.png",
-
-        "qty":1
-        
-        },
-        
-        {
-        "id":4,
-        
-        "title": "Blue Color",
-        
-        "price": 100,
-        
-        "imageUrl": "https://prasadyash2411.github.io/ecom-website/img/Album%204.png",
-
-        "qty":1
-        
-        }
-        
-        ]
+  "products": [
+    {
+      "id": 1,
+      "day": "JUL16",
+      "name": "DETROIT, MI",
+      "location": "DTE ENERGY MUSIC THEATRE"
+    },
+    {
+      "id": 2,
+      "day": "JUL19",
+      "name": "TORONTO,ON",
+      "location": "BUDWEISER STAGE"
+    },
+    {
+      "id": 3,
+      "day": "JUL22",
+      "name": "BRISTOW, VA",
+      "location": "JIGGY LUBE LIVE"
+    },
+    {
+      "id": 4,
+      "day": "JUL29",
+      "name": "PHOENIX, AZ",
+      "location": "AK-CHIN PAVILION"
+    },
+    {
+      "id": 5,
+      "day": "AUG2",
+      "name": "LAS VEGAS, NV",
+      "location": "T-MOBILE ARENA"
+    },
+    {
+      "id": 6,
+      "day": "AUG7",
+      "name": "CONCORD, CA",
+      "location": "CONCORD PAVILION"
+    }
+  ],
+  "productsArr": [
+    {
+      "id": 1,
+      "title": "Colors",
+      "price": 100,
+      "imageUrl": "https://prasadyash2411.github.io/ecom-website/img/Album%201.png",
+      "qty": 1
+    },
+    {
+      "id": 2,
+      "title": "Black and white Colors",
+      "price": 50,
+      "imageUrl": "https://prasadyash2411.github.io/ecom-website/img/Album%202.png",
+      "qty": 1
+    },
+    {
+      "id": 3,
+      "title": "Yellow and Black Colors",
+      "price": 70,
+      "imageUrl": "https://prasadyash2411.github.io/ecom-website/img/Album%203.png",
+      "qty": 1
+    },
+    {
+      "id": 4,
+      "title": "Blue Color",
+      "price": 100,
+      "imageUrl": "https://prasadyash2411.github.io/ecom-website/img/Album%204.png",
+      "qty": 1
+    }
+  ]
+  
 }

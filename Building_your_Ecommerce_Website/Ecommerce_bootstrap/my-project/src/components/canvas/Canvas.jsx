@@ -1,11 +1,14 @@
 // import React from 'react'
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Button,Card } from 'react-bootstrap';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import AppContext from '../../context-api/CartContext';
 
 const Canvas = ({show,setShow}) => {
-
+const [data,setData]=useState([]);
+const [total,setTotal]=useState(0);
+const [quant,setQuant]=useState(0)
+// console.log(data)
     const ctx=useContext(AppContext)
 
     const handleClose = () =>{
@@ -17,7 +20,32 @@ const Canvas = ({show,setShow}) => {
     // .......................................
       useEffect(()=>{
         setShow(ctx.Show);
-      },[ctx.Show])
+      },[ctx.Show]);
+
+      useEffect(()=>{
+         let ans=(data.reduce((acc,ele)=>acc+(Number(ele.qty)*Number(ele.price)),0))
+         setTotal(ans);
+
+         let qty=data.reduce((acc,ele)=>acc+(Number(ele.qty)),0);
+         setQuant(Number(qty))
+         ctx.CartTotal(quant)
+        },[ctx.data,data])
+        
+        // console.log(quant)
+      // console.log(total)
+
+
+      // ........................................
+      useEffect(()=>{
+        const useremail=ctx.UserMail;
+        let useremailid=useremail.replace(/[@.]/g,"");
+           fetch(`https://crudcrud.com/api/d41467106ee54d15a31a769d63e9f811/cart${useremailid}`)
+           .then((res)=>res.json())
+           .then((res)=>{
+            // console.log(res);
+            setData(res)
+           })
+      },[ctx.data])
 
 
   return (
@@ -34,7 +62,7 @@ const Canvas = ({show,setShow}) => {
                   <Card.Title style={{color:"darkgray",fontFamily:"-moz-initial",textDecoration:"underline"}}>QUANTITY</Card.Title>
               </div>
               {
-                ctx.data.map((ele)=>{
+                data.map((ele)=>{
                     return <Card key={ele.id} className='mb-1'>
                         <div className="d-flex justify-content-between ps-3 pe-3">
                     <Card.Title style={{color:"gray",fontFamily:"initial"}}>{ele.title}</Card.Title>
@@ -45,7 +73,7 @@ const Canvas = ({show,setShow}) => {
                 })
               }
               <div className='d-flex justify-content-end me-3'>
-                <Card.Title style={{color:"gray",fontFamily:"-moz-initial"}}>Total:</Card.Title> <Card.Title style={{color:"gray",fontFamily:"-moz-initial"}}>${ctx.totalPrice}</Card.Title>
+                <Card.Title style={{color:"gray",fontFamily:"-moz-initial"}}>Total:</Card.Title> <Card.Title style={{color:"gray",fontFamily:"-moz-initial"}}>${total}</Card.Title>
               </div>
              </Card>
         <Button className='d-flex m-auto'>PURCHASE</Button>

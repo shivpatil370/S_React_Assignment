@@ -1,5 +1,5 @@
 // import React from 'react'
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useState } from 'react';
 import { useRef } from 'react';
 import Button from 'react-bootstrap/Button';
@@ -39,8 +39,8 @@ const LoginPage = () => {
                   if(res.ok){
                     // 
                     return res.json().then((data)=>{
-                        // console.log(data);
-                        ctx.Login(data.idToken)
+                        // console.log(data.email);
+                        ctx.Login(data.idToken,data.email)
                         navigate("/store");
                         emailRef.current.value="";
                         passwordRef.current.value="";
@@ -48,6 +48,7 @@ const LoginPage = () => {
                   }
                   else{
                      return res.json((err)=>{
+                      console.log(err)
                         throw new Error("Authentication failed!")
                      })
                   }
@@ -98,10 +99,18 @@ const LoginPage = () => {
 
     }
 
+    useEffect(()=>{
+      document.body.style.backgroundColor="lightgray"
+
+      return ()=>{
+        document.body.style.backgroundColor=""
+      }
+    },[])
+
 
   return (
     
-    <div className='w-25 p-4 m-auto bg-light position-fixed top-50 start-50 translate-middle'>
+    <div style={{margin:"5rem auto 5rem auto",backgroundColor:" #300C94"}} className='w-25 p-4 text-white'>
         <h1 className="text-center text-info">{isLogin?"Login Page":"Sign Up"}</h1>
         
       <Form onSubmit={handleSubmit}>
@@ -119,7 +128,7 @@ const LoginPage = () => {
         {isLogin?"LogIn":"SugnUp"}
       </Button>
     </Form>
-      <p style={isLogin?{color:"red"}:{color:"blue"}} className=' text-center mt-4' onClick={()=>setIsLogin(!isLogin)}>{isLogin?"Dont have account?SignUp now!":"already have account? Login now!"}</p>
+      <p style={isLogin?{color:"red"}:{color:"orange"}} className=' text-center mt-4' onClick={()=>setIsLogin(!isLogin)}>{isLogin?"Dont have account?SignUp now!":"already have account? Login now!"}</p>
     </div>
     
   )
