@@ -1,0 +1,32 @@
+.top{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /* background-color: rgb(190, 190, 190, 0.9); */
+}
+.box{
+   
+}
+.bottom{
+    width: fit-content;
+    /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+    background-color: cornsilk;
+    padding: 2rem;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 1rem;
+    
+      label{
+        display: block;
+    }
+    input{
+        margin-bottom: 1rem;
+        display: block;
+    }
+
+}
+
