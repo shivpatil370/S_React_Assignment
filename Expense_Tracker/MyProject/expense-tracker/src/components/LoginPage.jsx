@@ -15,15 +15,28 @@ const LoginPage = () => {
    const handleSubmit=(e)=>{
      e.preventDefault();
 
-      let obj={
-        email:emailRef.current.value,
-        password:passwordRef.current.value,
-        conformPassword:conformPasswordRef.current.value
-      };
+       let obj;
+     if(isLogged){
+         obj={
+            email:emailRef.current.value,
+            password:passwordRef.current.value,
+          };
+      }
+     else{
+
+          obj={
+           email:emailRef.current.value,
+           password:passwordRef.current.value,
+           conformPassword:conformPasswordRef.current.value
+         };
+     }
     //   console.log(obj)
-    if(obj.password!=obj.conformPassword){
-        alert("password and Conformed-Password doesn't match!")
-        throw new Error("password and Conformed-Password doesn't match!")
+    
+    if(!isLogged){
+        if(obj.password!=obj.conformPassword){
+            alert("password and Conformed-Password doesn't match!")
+            throw new Error("password and Conformed-Password doesn't match!")
+        }
     }
 
         if(isLogged){
@@ -98,9 +111,9 @@ const LoginPage = () => {
             })
         }
 
-          emailRef.current.value="";
-          passwordRef.current.value="";
-          conformPasswordRef.current.value="";
+        //   emailRef.current.value="";
+        //   passwordRef.current.value="";
+        //   conformPasswordRef.current.value="";
    }
 
   return (
@@ -114,13 +127,13 @@ const LoginPage = () => {
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
         <Form.Label>Password</Form.Label>
-        <Form.Control type="text" placeholder="Password" ref={passwordRef} required/>
+        <Form.Control type={isLogged?"password":"text"} placeholder="Password" ref={passwordRef} required/>
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formBasicConformPassword">
+      {!isLogged&&<Form.Group className="mb-3" controlId="formBasicConformPassword">
         <Form.Label>Conform Password</Form.Label>
         <Form.Control type="password" placeholder="Password" ref={conformPasswordRef} required/>
-      </Form.Group>
+      </Form.Group>}
       
       <Button className='d-flex m-auto' variant="primary" type="submit">
       {isLogged?"Log In":"Sign UP"}
