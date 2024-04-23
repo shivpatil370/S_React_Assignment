@@ -3,7 +3,10 @@ import { createContext } from "react";
 
 const AppContext=createContext({
     token:"",
-    AddLogin:()=>{}
+    AddLogin:()=>{},
+    isLogin:false,
+    userProfile:"",
+    AdduserProfile:()=>{}
 });
 
 export default AppContext;

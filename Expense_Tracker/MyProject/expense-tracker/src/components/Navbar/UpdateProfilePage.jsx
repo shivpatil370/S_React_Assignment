@@ -1,7 +1,7 @@
 // import React from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { useContext, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import AppContext from "../../context-api/contextApi";
 
 const UpdateProfilePage = () => {
@@ -46,7 +46,32 @@ const ctx=useContext(AppContext);
                   })
               }
           })
-    }
+    };
+
+// .......................USER PROFILE......................... 
+    useEffect(()=>{
+         fetch("https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyCzVFWq-_u_t4fNs0LS1Gu3BBUImY0bV98",{
+            method:"POST",
+            body:JSON.stringify({idToken:ctx.token}),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+         })
+         .then((res)=>{
+              if(res.ok){
+                return res.json().then((data)=>{
+                    // console.log(data);
+                    ctx.AdduserProfile(data)
+                })
+              }
+              else{
+                return res.json().then((err)=>{
+                    console.log(err.error.message)
+                })
+              }
+         })
+        },[ctx.userProfile]);
+        // console.log(ctx.userProfile)
 
   return (
     <div>
@@ -54,7 +79,7 @@ const ctx=useContext(AppContext);
     <div className="border">
       <ul className="d-md-flex justify-content-between ms-4 me-4 list-unstyled align-items-center">
         <li>Winners never quite, Quitters never win.</li>
-        <li style={{width:"40%"}}><p style={{backgroundColor:"lightgray", borderRadius:"1rem", padding:"1rem"}} className="fluid h-md-5rem">Your profile is {0}% completed. A Complete Profile has higher chances of landing a job Complete now</p></li>
+        <li style={{width:"40%"}}><p style={{backgroundColor:"lightgray", borderRadius:"1rem", padding:"1rem"}} className="fluid h-md-5rem">Your profile is {ctx.userProfile?"100":"0"}% completed. A Complete Profile has higher chances of landing a job Complete now</p></li>
       </ul>
     </div>
 

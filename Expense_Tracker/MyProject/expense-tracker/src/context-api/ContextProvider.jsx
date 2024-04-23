@@ -5,21 +5,20 @@ import AppContext from "./contextApi"
 const ContextProvider = ({children}) => {
     const localtoken=localStorage.getItem("token");
     const [tokens,setToken]=useState(localtoken);
-    const localprofile=localStorage.getItem("userProfile");
-    const [profile,setProfile]=useState(localprofile);
+    
+    const [profile,setProfile]=useState("");
 
     const islogg=!!tokens;
-console.log(profile)
+// console.log(profile)
 
     const handleToken=(token)=>{
         // console.log(token)
           setToken(token);
-          localStorage.setItem("token",JSON.stringify(token));
+          localStorage.setItem("token",token);
     };
 
     const handleUserProfile=(ele)=>{
         setProfile(ele)
-        localStorage.setItem("userProfile",JSON.stringify(ele));
     }
     
     const contextval={
