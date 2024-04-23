@@ -2,15 +2,21 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import styles from "./LoginPage.module.css"
-import { useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import AppContext from '../context-api/contextApi';
 
 const LoginPage = () => {
    const [isLogged,setIsLogged]=useState(false);
+   const [isForgot,setIsForgot]=useState(false);
 
    const emailRef=useRef();
    const passwordRef=useRef();
    const conformPasswordRef=useRef();
 
+       const navigate=useNavigate();
+
+       const ctx=useContext(AppContext);
 
    const handleSubmit=(e)=>{
      e.preventDefault();
@@ -55,8 +61,10 @@ const LoginPage = () => {
             .then((res)=>{
                     if(res.ok){
                         return res.json().then((data)=>{
-                            console.log(data);
+                            // console.log(data.idToken);
+                            ctx.AddLogin(data.idToken);
                             alert("Log-In successfully!");
+                            navigate("/profile")
                         })
                         
                     }
@@ -114,11 +122,19 @@ const LoginPage = () => {
         //   emailRef.current.value="";
         //   passwordRef.current.value="";
         //   conformPasswordRef.current.value="";
+   };
+
+
+   const handleLog=()=>{
+    setIsLogged(!isLogged);
+    setIsForgot(false)
    }
 
   return (
+    <div>
     <div className={styles.box}>
-        <h1 className='text-center'>{isLogged?"LogIn":"SignUP"}</h1>
+        {!isForgot&&<h1 className='text-center'>{isLogged?"LogIn":"SignUP"}</h1>}
+        {isForgot&&<h1 className='text-center'>{"ForgotPassword"}</h1>}
         <Form onSubmit={handleSubmit}>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
@@ -135,12 +151,17 @@ const LoginPage = () => {
         <Form.Control type="password" placeholder="Password" ref={conformPasswordRef} required/>
       </Form.Group>}
       
-      <Button className='d-flex m-auto' variant="primary" type="submit">
+      {!isForgot&&<Button className='d-flex m-auto' variant="primary" type="submit">
       {isLogged?"Log In":"Sign UP"}
-      </Button>
+      </Button>}
+      {isForgot&&<Button className='d-flex m-auto' variant="primary" type="submit">
+      {"Forgot Password"}
+      </Button>}
     </Form>
 
-      <p onClick={()=>setIsLogged(!isLogged)} className='text-center border mt-2 user-select-none'>Have an account? Login</p>
+     {!isForgot&&isLogged&&<p onClick={()=>setIsForgot(true)} className='text-center mt-2 text-decoration-underline text-primary'>Forgot Password</p>}
+    </div>
+      <p style={isLogged?{color:"red"}:{color:"orange"}} onClick={handleLog} className='w-25 m-auto text-center border mt-2 user-select-none bg-info-subtle'>{isLogged?"Don't have an account? Signup":"Have an account? Login"}</p>
     </div>
   )
 }

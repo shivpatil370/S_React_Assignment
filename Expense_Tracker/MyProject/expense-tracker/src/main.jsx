@@ -1,10 +1,15 @@
-import React from 'react'
+// import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
-import './index.css'
+import './index.css';
+import appRouter from './RouterDom/AppRouter.jsx';
+import { RouterProvider } from 'react-router-dom';
+import ContextProvider from './context-api/ContextProvider.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  <ContextProvider>
+  <RouterProvider router={appRouter}>
     <App />
-  </React.StrictMode>,
+  </RouterProvider>
+  </ContextProvider>,
 )
