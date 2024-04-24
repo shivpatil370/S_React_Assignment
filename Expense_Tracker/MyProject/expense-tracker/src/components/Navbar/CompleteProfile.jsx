@@ -51,7 +51,7 @@ const navigate=useNavigate()
         <li>Welcome to Expense Tracker!!!</li>
         {ctx.userProfile.displayName&&<img style={{margin:"0 0 0 auto",borderRadius:"50%"}} width="5%" src={ctx.userProfile.photoUrl} alt="img"/>}
         <div className="d-flex gap-3 align-items-center">
-        {ctx.userProfile.displayName?<p className="ms-1">{ctx.userProfile.displayName}</p>:<li className="d-flex gap-2">Your profile is Incomplete <Link to="/updateprofile">Complete now</Link></li>}
+        {ctx.userProfile.displayName?<p className="ms-1">{ctx.userProfile.displayName.split(" ")[0]}</p>:<li className="d-flex gap-2">Your profile is Incomplete <Link to="/updateprofile">Complete now</Link></li>}
         <div className="">
            {verifyMail?<p className="text-success">{"mail verified"}</p>:<button onClick={()=>setIsmail(true)} className="border bg-danger text-white">verify-email</button>}
       </div>

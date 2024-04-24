@@ -9,6 +9,7 @@ import AppContext from '../context-api/contextApi';
 const LoginPage = () => {
    const [isLogged,setIsLogged]=useState(false);
    const [isForgot,setIsForgot]=useState(false);
+   const [loader,setLoader]=useState(false);
 
    const emailRef=useRef();
    const passwordRef=useRef();
@@ -37,6 +38,45 @@ const LoginPage = () => {
          };
      }
     //   console.log(obj)
+
+    if(isForgot&&isLogged){
+        //FORGOT PASS
+        setLoader(true);
+        fetch("https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyCzVFWq-_u_t4fNs0LS1Gu3BBUImY0bV98",{
+            method:"POST",
+            body:JSON.stringify({
+                requestType:"PASSWORD_RESET",
+                email:obj.email
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then((res)=>{
+            if(res.ok){
+                return res.json().then((data)=>{
+                    setLoader(false);
+                    console.log(data);
+                     alert("forgot password successful!!!")
+                })
+                
+            }
+            else{
+                return res.json().then((err)=>{
+                    // console.log(err.error.message)
+                      if(err&&err.error&&err.error.message){
+                        //  alert(err.error.message)
+                        console.log(err.error.message);
+                      }
+                      else{
+
+                          alert("Authentication failed!")
+                      }
+                 })
+            }
+    })
+    }
+
     
     if(!isLogged){
         if(obj.password!=obj.conformPassword){
@@ -45,7 +85,7 @@ const LoginPage = () => {
         }
     }
 
-        if(isLogged){
+        if(!isForgot&&isLogged){
             //LOG IN
             fetch("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCzVFWq-_u_t4fNs0LS1Gu3BBUImY0bV98",{
                 method:"POST",
@@ -119,6 +159,8 @@ const LoginPage = () => {
             })
         }
 
+
+        
         //   emailRef.current.value="";
         //   passwordRef.current.value="";
         //   conformPasswordRef.current.value="";
@@ -130,7 +172,7 @@ const LoginPage = () => {
     setIsForgot(false)
    }
 
-  return (
+  return loader?<h1 className='text-center mt-5 mb-5'>Loading...</h1>:(
     <div>
     <div className={styles.box}>
         {!isForgot&&<h1 className='text-center'>{isLogged?"LogIn":"SignUP"}</h1>}
