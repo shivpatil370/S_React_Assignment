@@ -5,6 +5,8 @@ import CompleteProfile from "../components/Navbar/CompleteProfile";
 import UpdateProfilePage from "../components/Navbar/UpdateProfilePage";
 import { useContext } from "react";
 import AppContext from "../context-api/contextApi";
+import VerifyMail from "../components/Navbar/VerifyMail";
+import DailyExpense from "../components/body/DailyExpense";
 
 
 const PrivateRoute=({children})=>{
@@ -18,8 +20,10 @@ const appRouter=createBrowserRouter([
         element:<App/>,
         children:[
             {path:"/", element:<LoginPage/>},
-            {path:"/profile", element:<PrivateRoute><CompleteProfile/></PrivateRoute>},
-            {path:"/updateprofile", element:<PrivateRoute><UpdateProfilePage/></PrivateRoute>}
+            // {path:"/profile", element:<PrivateRoute><CompleteProfile/></PrivateRoute>},
+            {path:"/updateprofile", element:<PrivateRoute><UpdateProfilePage/></PrivateRoute>},
+            {path:"/verifymail", element:<PrivateRoute><VerifyMail/></PrivateRoute>},
+            {path:"/dailyexpense", element:<PrivateRoute><DailyExpense/></PrivateRoute>}
         ]
     }
 ]);

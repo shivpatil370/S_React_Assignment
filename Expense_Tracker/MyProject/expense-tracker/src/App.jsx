@@ -1,7 +1,7 @@
 // import { useState } from 'react'
 import './App.css'
 // import LoginPage from './components/LoginPage';
-// import CompleteProfile from './components/Navbar/CompleteProfile';
+import CompleteProfile from './components/Navbar/CompleteProfile';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Outlet } from 'react-router-dom';
 
@@ -11,7 +11,7 @@ function App() {
   return (
     <>
       {/* <LoginPage/> */}
-      {/* <CompleteProfile/> */}
+      <CompleteProfile/>
       <Outlet/>
     </>
   )

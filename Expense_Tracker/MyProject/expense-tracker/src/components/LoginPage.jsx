@@ -53,32 +53,27 @@ const LoginPage = () => {
             }
         })
         .then((res)=>{
+            setLoader(false);
+            
             if(res.ok){
                 return res.json().then((data)=>{
-                    setLoader(false);
                     console.log(data);
-                     alert("forgot password successful!!!")
+                    alert("reset pass sent on ur email!")
                 })
                 
             }
             else{
-                return res.json().then((err)=>{
-                    // console.log(err.error.message)
-                      if(err&&err.error&&err.error.message){
-                        //  alert(err.error.message)
-                        console.log(err.error.message);
-                      }
-                      else{
-
-                          alert("Authentication failed!")
-                      }
-                 })
+                throw new Error('Failed to send password reset email.');
             }
     })
+    .catch((err) => {
+        console.error(err);
+        alert("Authentication failed or network error!");
+    });
     }
 
     
-    if(!isLogged){
+    if(!isForgot&&!isLogged){
         if(obj.password!=obj.conformPassword){
             alert("password and Conformed-Password doesn't match!")
             throw new Error("password and Conformed-Password doesn't match!")
@@ -104,7 +99,7 @@ const LoginPage = () => {
                             // console.log(data.idToken);
                             ctx.AddLogin(data.idToken);
                             alert("Log-In successfully!");
-                            navigate("/profile")
+                            navigate("/dailyexpense")
                         })
                         
                     }
@@ -176,7 +171,7 @@ const LoginPage = () => {
     <div>
     <div className={styles.box}>
         {!isForgot&&<h1 className='text-center'>{isLogged?"LogIn":"SignUP"}</h1>}
-        {isForgot&&<h1 className='text-center'>{"ForgotPassword"}</h1>}
+        {isForgot&&<h3 className='text-center'>{"ForgotPassword"}</h3>}
         <Form onSubmit={handleSubmit}>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
