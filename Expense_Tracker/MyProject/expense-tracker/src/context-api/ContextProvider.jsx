@@ -4,8 +4,8 @@ import AppContext from "./contextApi"
 
 const ContextProvider = ({children}) => {
     const localtoken=localStorage.getItem("token");
+    // const localProfile=localStorage.getItem("useProfile");
     const [tokens,setToken]=useState(localtoken);
-    
     const [profile,setProfile]=useState("");
 
     const islogg=!!tokens;
@@ -18,7 +18,12 @@ const ContextProvider = ({children}) => {
     };
 
     const handleUserProfile=(ele)=>{
-        setProfile(ele)
+        setProfile(ele);
+        // localStorage.setItem("useProfile",ele)
+    };
+
+    const handleLoggout=()=>{
+        localStorage.clear()
     }
     
     const contextval={
@@ -26,7 +31,8 @@ const ContextProvider = ({children}) => {
         AddLogin:handleToken,
         isLogin:islogg,
         userProfile:profile,
-        AdduserProfile:handleUserProfile
+        AdduserProfile:handleUserProfile,
+        AddLogout:handleLoggout
     }
 
   return (
