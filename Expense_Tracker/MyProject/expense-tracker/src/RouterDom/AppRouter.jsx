@@ -11,7 +11,7 @@ import DailyExpense from "../components/body/DailyExpense";
 
 const PrivateRoute=({children})=>{
     const ctx=useContext(AppContext);
-    return ctx.token?children:<Navigate to="/"/>
+    return ctx.token?children:<Navigate to="/login"/>
 }
 
 const appRouter=createBrowserRouter([
@@ -19,11 +19,11 @@ const appRouter=createBrowserRouter([
         path:"/",
         element:<App/>,
         children:[
-            {path:"/", element:<LoginPage/>},
-            // {path:"/profile", element:<PrivateRoute><CompleteProfile/></PrivateRoute>},
+            {path:"/", element:<PrivateRoute><DailyExpense/></PrivateRoute>},
+            {path:"/login", element:<LoginPage/>},
+            {path:"/profile", element:<PrivateRoute><CompleteProfile/></PrivateRoute>},
             {path:"/updateprofile", element:<PrivateRoute><UpdateProfilePage/></PrivateRoute>},
             {path:"/verifymail", element:<PrivateRoute><VerifyMail/></PrivateRoute>},
-            {path:"/dailyexpense", element:<PrivateRoute><DailyExpense/></PrivateRoute>}
         ]
     }
 ]);

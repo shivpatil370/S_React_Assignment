@@ -3,13 +3,18 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useEffect, useRef, useState } from 'react';
 
+// import {getDatabase,onValue,ref,set} from "firebase/database";
+// import { app } from '../../Firebse';
+
 const DailyExpense = () => {
- const [expense,setExpense]=useState([]);
+ const [expense,setExpense]=useState({});
+ const [dummy,setDummy]=useState([]);
+ const [editkey,setEditkey]=useState("");
  const amountRef=useRef()
  const descriptionRef=useRef()
  const categoryRef=useRef()
 
-//  console.log(expense)
+//  console.log(editkey)
 
 
     const handleSubmit=(e)=>{
@@ -22,12 +27,10 @@ const DailyExpense = () => {
         };
         // console.log(obj);
 
-        // setExpense((prev)=>{
-        //     return [...prev, obj]
-        // })
-
-        fetch("https://expense-tracker-app-15d5d-default-rtdb.firebaseio.com/expense.json",{
-           method:"POST",
+        if(editkey){
+          //EDIT  
+          fetch(`https://expense-tracker-app-15d5d-default-rtdb.firebaseio.com/expense/${editkey}.json`,{
+           method:"PUT",
            body:JSON.stringify(obj),
            headers:{
                "Content-Type":"application/json"
@@ -36,11 +39,10 @@ const DailyExpense = () => {
         .then((res)=>{
             if(res.ok){
               return res.json().then((data)=>{
-                // console.log(data);
-                setExpense((prev)=>{
-                    return [...prev, data]
-                })
-
+                console.log(data);
+                
+                setDummy(data)
+                setEditkey("")
                 amountRef.current.value="",
                 descriptionRef.current.value="",
                 categoryRef.current.value="";
@@ -54,10 +56,45 @@ const DailyExpense = () => {
               })
             }
         })
+             
+        }
+        else{
+
+        fetch("https://expense-tracker-app-15d5d-default-rtdb.firebaseio.com/expense.json",{
+           method:"POST",
+           body:JSON.stringify(obj),
+           headers:{
+               "Content-Type":"application/json"
+           }
+        })
+        .then((res)=>{
+            if(res.ok){
+              return res.json().then((data)=>{
+                console.log(data);
+                
+                setDummy(data)
+                 setEditkey("")
+                amountRef.current.value="",
+                descriptionRef.current.value="",
+                categoryRef.current.value="";
+                  
+              })
+            }
+            else{
+              return res.json().then((err)=>{
+                console.log(err.error.message);
+                  
+              })
+            }
+        })
+      }
 
     };
 
     // console.log(expense)
+
+
+    
 
     useEffect(()=>{
        fetch("https://expense-tracker-app-15d5d-default-rtdb.firebaseio.com/expense.json")
@@ -65,7 +102,7 @@ const DailyExpense = () => {
            if(res.ok){
               return res.json().then((data)=>{
                 // console.log(data);
-                setExpense([data]);
+                setExpense(data);
                   
               })
            }
@@ -75,8 +112,53 @@ const DailyExpense = () => {
        })
        .catch((err)=>{
         console.log(err);
-       })
-    },[])
+       });
+       //...........................OR...................
+      // const db=getDatabase(app);
+      // const valRef=ref(db,"expense");
+      // onValue(valRef,(snapshot)=>{
+      //   const data=snapshot.val();
+      // // console.log(data);
+      // setExpense(data);
+      // });
+
+    },[dummy]);
+
+
+    // ...................DELETE.....................
+    const handleDelete=(key)=>{
+      fetch(`https://expense-tracker-app-15d5d-default-rtdb.firebaseio.com/expense/${key}.json`,{
+        method:"DELETE",
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then((res)=>{
+          if(res.ok){
+             return res.json().then((data)=>{
+               console.log(data);
+               setDummy([{dummy:"dummy"}]);
+                 
+             })
+          }
+          else{
+             throw new Error("failed request")
+          }
+      })
+      .catch((err)=>{
+       console.log(err);
+      });
+    };
+
+
+    //....................EDIT..............................  
+    const handleEdit=(key,ele)=>{
+      // console.log(ele)
+      setEditkey(key)
+        amountRef.current.value=ele.amount;
+        categoryRef.current.value=ele.category;
+        descriptionRef.current.value=ele.description;
+    }
 
 
   return (
@@ -112,9 +194,9 @@ const DailyExpense = () => {
     <div style={{width:"fit-Content", margin:"auto"}}>
         <h3 className='text-center'>daily expenses</h3>
         {
-            expense.map((ele,index)=>{
-              console.log(ele)
-                return <h6 className='text-center border p-2 mb-1' key={index}>{`${ele.amount}-${ele.description}-${ele.category}`}</h6>
+            Object.entries(expense)?.map(([key,ele])=>{
+              // console.log(ele)
+                return <h6 className='text-center border p-2 mb-1' key={key}>{`${ele.amount}-${ele.description}-${ele.category}-`}<Button className='bg-danger' size='sm' onClick={()=>handleDelete(key)}>Delete</Button>-<Button className='bg-info' size="sm" onClick={()=>handleEdit(key,ele)}>Edit</Button></h6>
             })
         }
     </div>
@@ -125,4 +207,4 @@ const DailyExpense = () => {
   )
 }
 
-export default DailyExpense
+export default DailyExpense;
