@@ -191,7 +191,7 @@ const DailyExpense = () => {
     <hr></hr>
 
     {/* ....................................................................... */}
-    <div style={{width:"fit-Content", margin:"auto"}}>
+    <div style={{width:"fit-Content", margin:"auto",marginBottom:"2rem"}}>
         <h3 className='text-center'>daily expenses</h3>
         {
             Object.entries(expense)?.map(([key,ele])=>{
