@@ -1,21 +1,50 @@
-import {createStore} from "redux";
 
-const counterReducer=(state={counter:0},action)=>{
-     if(action.type=="INCREMENTBY5"){
-        return {
-            counter:state.counter+5
+import {createSlice,configureStore} from "@reduxjs/toolkit"
+
+const initialCounterstate={counter:0,showToggle:true};
+  
+      const counterSlice=createSlice({
+        name:'counter',
+        initialState:initialCounterstate,
+        reducers:{
+            INCREMENT:(state,action)=>{
+                state.counter=state.counter+action.payload
+            },
+            DECREMENT:(state,action)=>{
+                state.counter=state.counter-action.payload
+            },
+            toggle(state){
+                state.showToggle=!state.showToggle
+            }
         }
+      });
 
-    }
-     if(action.type=="DECREMENTBY5"){
-        return {
-            counter:state.counter-5
-        }
-    }
-   
-    
-    return state;
-}
 
-const store=createStore(counterReducer);
+      const initialAuthState={
+        isAuthenticated:false
+      }
+      const authSlice=createSlice({
+            name:"authentication",
+            initialState:initialAuthState,
+            reducers:{
+               Login(state){
+                  state.isAuthenticated=true;
+               },
+               Logout(state){
+                  state.isAuthenticated=false;
+               }
+            }
+      })
+
+
+    //   ...........STORE..............
+const store=configureStore({
+    reducer:{
+        counter:counterSlice.reducer,
+        authentication:authSlice.reducer
+    }
+});
+
+export const counterActions=counterSlice.actions;
+export const authActions=authSlice.actions;
 export default store;
