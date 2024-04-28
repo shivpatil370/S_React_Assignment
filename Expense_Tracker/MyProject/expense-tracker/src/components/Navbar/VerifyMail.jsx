@@ -48,9 +48,10 @@ const navigate=useNavigate()
         <Form.Control type="email" placeholder="Enter email" />
       </Form.Group>
 
-      <Button onClick={handleverify} variant="primary" type="submit">
+      <Button onClick={handleverify} variant="primary" size='sm' type="submit">
         verify email
       </Button>
+      <Button onClick={()=>navigate(-1)} className='bg-info ms-1' size='sm'>cancel</Button>
          </div>
     </div>
   )

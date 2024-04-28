@@ -5,11 +5,15 @@ import styles from "./LoginPage.module.css"
 import { useContext, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppContext from '../context-api/contextApi';
+import { useDispatch } from 'react-redux';
+import { authActions } from '../redux-store/AuthReducer';
 
 const LoginPage = () => {
    const [isLogged,setIsLogged]=useState(false);
    const [isForgot,setIsForgot]=useState(false);
    const [loader,setLoader]=useState(false);
+
+   
 
    const emailRef=useRef();
    const passwordRef=useRef();
@@ -18,6 +22,12 @@ const LoginPage = () => {
        const navigate=useNavigate();
 
        const ctx=useContext(AppContext);
+       
+       const dispatch=useDispatch()
+    //    const token=useSelector(store=>store.auth.token);
+    //    const islogin=useSelector(store=>store.auth.lisLoggedIn);
+    //    const userid=useSelector(store=>store.auth.userId);
+    //    console.log(login,islogin,userid)
 
    const handleSubmit=(e)=>{
      e.preventDefault();
@@ -98,8 +108,9 @@ const LoginPage = () => {
                         return res.json().then((data)=>{
                             // console.log(data.idToken);
                             ctx.AddLogin(data.idToken);
+                            dispatch(authActions.Login({payload:data.idToken,mailid:data.email}))
                             alert("Log-In successfully!");
-                            navigate("/dailyexpense")
+                            navigate("/")
                         })
                         
                     }
