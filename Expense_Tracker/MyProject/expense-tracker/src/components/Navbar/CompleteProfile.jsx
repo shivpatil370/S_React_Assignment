@@ -27,7 +27,7 @@ const isthems=useSelector(store=>store.theme.isDark);
      document.body.style.color="white";
    }
    else{
-    document.body.style.backgroundColor="lightgray";
+    document.body.style.backgroundColor="rgb(90,90,90,0.1)";
      document.body.style.color="";
    }
 
