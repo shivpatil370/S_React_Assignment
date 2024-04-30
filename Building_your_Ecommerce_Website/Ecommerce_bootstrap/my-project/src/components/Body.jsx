@@ -4,6 +4,7 @@ import { Button, Card, Col, Row, Badge } from "react-bootstrap";
 import styles from "./Body.module.css";
 import { useContext, useEffect, useState } from "react";
 import AppContext from "../context-api/CartContext";
+import { ColorRing } from 'react-loader-spinner'
 
 const Body = () => {
     const [products,setProducts]=useState([]);
@@ -234,7 +235,15 @@ const Body = () => {
         
 
 
-  return loading?(<h1 style={{color:"orange",textAlign:"center",margin:"3rem 0 3rem 0"}}>Loading...</h1>):
+  return loading?(<span style={{display:"flex",justifyContent:"center",marginTop:"2rem",marginBottom:"2rem"}}><ColorRing 
+  visible={true}
+  height="80"
+  width="80"
+  ariaLabel="color-ring-loading"
+  wrapperStyle={{}}
+  wrapperClass="color-ring-wrapper"
+  colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+  /></span>):
   err?(<h1 style={{color:"red", textAlign:"center",margin:"3rem 0 3rem 0"}}>...Retrying <Badge>{time}</Badge><Button className="bg-danger ms-2" onClick={()=>setErr(false)}>cancel</Button></h1>): (
       <div className="box bg-dark">
         <header style={{background:"rgb(119,119,119)"}} className="header w-100">

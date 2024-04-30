@@ -38,14 +38,14 @@ const [quant,setQuant]=useState(0)
       // ........................................
       useEffect(()=>{
         const useremail=ctx.UserMail;
-        let useremailid=useremail.replace(/[@.]/g,"");
+        let useremailid=useremail?.replace(/[@.]/g,"");
            fetch(`https://crudcrud.com/api/d41467106ee54d15a31a769d63e9f811/cart${useremailid}`)
            .then((res)=>res.json())
            .then((res)=>{
-            // console.log(res);
+            console.log(res);
             setData(res)
            })
-      },[ctx.data])
+      },[ctx?.data])
 
 
   return (

@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import {Button,Badge} from "react-bootstrap";
 
+
 const Home = () => {
   const [products,setProducts]=useState([]);
   const [loading,setLoading]=useState(true);
@@ -70,7 +71,7 @@ const Home = () => {
 
          
 
-  return  loading?(<h1 style={{color:"orange",textAlign:"center",margin:"3rem 0 3rem 0"}}>Loading...</h1>):
+  return  loading?(<h1 style={{textAlign:"center",color:"orange",marginTop:"2rem",marginBottom:"2rem"}}>Loading...</h1>):
   err?(<h1 style={{color:"red", textAlign:"center",margin:"3rem 0 3rem 0"}}>...Retrying <Badge>{time}</Badge><Button className="bg-danger ms-2" onClick={()=>setErr(false)}>cancel</Button></h1>):
   (
         <div style={{backgroundColor:"rgb(119,119,119)"}}>
