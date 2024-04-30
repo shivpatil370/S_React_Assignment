@@ -1,12 +1,11 @@
+import { useSelector } from 'react-redux';
 import classes from './Notification.module.css';
+// import { cartActions } from '../../redux-store/CartReducer';
 
-      let flag=true;
+     
 const Notification = (props) => {
-
-        if(flag){
-            flag=false;
-            return
-        }
+  const rdx=useSelector(store=>store.cart.changed)
+       
   let specialClasses = '';
 
   if (props.note.status === 'error') {
@@ -18,7 +17,7 @@ const Notification = (props) => {
 
   const cssClasses = `${classes.notification} ${specialClasses}`;
 
-  return (
+  return rdx&&(
     <section className={cssClasses}>
       <h2>{props.note.title}</h2>
       <p>{props.note.message}</p>

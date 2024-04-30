@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 
-const init={data:[],toggle:false,renders:[]}
+const init={data:[],toggle:false,renders:[],changed:false}
 const cartSlice=createSlice({
     name:"cart",
     initialState:init,
@@ -12,10 +12,12 @@ const cartSlice=createSlice({
             state.renders=action.payload;
         },
         DirectAdd(state,action){
-           state.data=action.payload
+           state.data=action.payload||[]
         },
 
         AddData(state,action){
+            state.changed=true;
+
             const ele=action.payload;
             const index=state.data.findIndex(item=>item.id===ele.id);
             const existingItem=state.data[index];
@@ -43,11 +45,14 @@ const cartSlice=createSlice({
         },
 
         RemoveData(state,action){
+            state.changed=true;
+
             const ele=action.payload;
             const index=state.data.findIndex(item=>item.id===ele.id);
             const existingItem=state.data[index];
             if(existingItem.quantity===1){
                 state.data=state.data.filter(item=>item.id!==ele.id);
+                state.changed=false;
             }
             else{
                 let alldata=state.data;

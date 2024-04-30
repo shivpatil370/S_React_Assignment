@@ -14,6 +14,7 @@ function App() {
   const [note,setNote]=useState({})
 const toggle=useSelector(store=>store.cart.toggle);
 const cart=useSelector(store=>store.cart.data);
+const changed=useSelector(store=>store.cart.changed);
 const dispatch=useDispatch()
 // console.log(cart)
 
@@ -36,7 +37,8 @@ useEffect(()=>{
     status=false;
     return
   }
-  check=true;
+  // check=true;
+          if(changed){
      setNote({title:"Adding...",message:"data adding to cart!"})
      fetch("https://userdata-499d4-default-rtdb.firebaseio.com/cart.json",{
       method:"PUT",
@@ -62,7 +64,8 @@ useEffect(()=>{
               })
           }
      })
-},[cart]);
+    }
+},[cart,changed]);
 
 
   return (

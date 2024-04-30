@@ -23,7 +23,7 @@ const handlecart=()=>{
 
   return (
     <button onClick={handlecart} className={classes.button}>
-      <span>My Cart</span>
+      <span title='click to see cart!'>My Cart</span>
       <span className={classes.badge}>{total}</span>
     </button>
   );
