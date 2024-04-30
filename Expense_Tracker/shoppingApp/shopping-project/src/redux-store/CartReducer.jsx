@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 
-const init={data:[],toggle:false}
+const init={data:[],toggle:false,renders:[]}
 const cartSlice=createSlice({
     name:"cart",
     initialState:init,
@@ -8,6 +8,10 @@ const cartSlice=createSlice({
         AddToggle(state){
            state.toggle=!state.toggle;
         },
+        AddRenders(state,action){
+            state.renders=action.payload;
+        },
+
         AddData(state,action){
             const ele=action.payload;
             const index=state.data.findIndex(item=>item.id===ele.id);
