@@ -11,6 +11,9 @@ const cartSlice=createSlice({
         AddRenders(state,action){
             state.renders=action.payload;
         },
+        DirectAdd(state,action){
+           state.data=action.payload
+        },
 
         AddData(state,action){
             const ele=action.payload;
