@@ -1,0 +1,7 @@
+/* className='p-4 m-auto bg-white mt-5 container-fluid' */
+.bgc{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 2rem;
+    margin: auto;
+    margin-top: 5rem;
+}
