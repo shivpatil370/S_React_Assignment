@@ -1,13 +1,17 @@
 // import React from 'react'
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import styles from "./LoginPage.module.css"
+import styles from "./SignUp.module.css"
+import { useNavigate } from 'react-router-dom';
 
-const LoginPage = () => {
+const SignUp = () => {
+  const [isLogin,setIsLogin]=useState();
     const emailRef=useRef();
     const passRef=useRef();
     const conformpassRef=useRef();
+
+    const navigate=useNavigate()
 
     useEffect(()=>{
         document.body.style.backgroundColor="whitesmoke";
@@ -21,14 +25,59 @@ const LoginPage = () => {
     const handleSubmit=(e)=>{
         e.preventDefault();
         
-        let obj={
+        let obj;
+        if(isLogin){
+          obj={
+            email:emailRef.current.value,
+            password:passRef.current.value,
+        };
+        }
+        else{
+           obj={
             email:emailRef.current.value,
             password:passRef.current.value,
             conformpass:conformpassRef.current.value
         };
+        }
 
-        console.log(obj);
-        if(obj.password===obj.conformpass){
+        // console.log(obj);
+        if(isLogin ||obj.password===obj.conformpass){
+              if(isLogin){
+                //LOGIN...
+                fetch("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyA7K1snfsZcqfce3uNQVIOrjQjmUM1zm8k",{
+                method:"POST",
+                body:JSON.stringify({
+                    email:obj.email,
+                    password:obj.password,
+                    returnSecureToken:true,
+                }),
+                headers:{
+                    "Content-Type":"application/json",
+                }
+              })
+              .then((res)=>{
+                   if(res.ok){
+                      return res.json().then((data)=>{
+                        console.log(data.idToken);
+                        alert("LogIn successfully!");
+                        navigate("/home")
+                      })
+                   }
+                   else{
+                    return res.json().then((err)=>{
+                        console.log(err.error.message)
+                          if(err?.error?.message){
+                             alert(err.error.message);
+                          }
+                          else{
+                            alert("Something went wrong!");
+                          }
+                      })
+                   }
+              });
+              }
+              else{ 
+                    // SIGN-UP...
               fetch("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyA7K1snfsZcqfce3uNQVIOrjQjmUM1zm8k",{
                 method:"POST",
                 body:JSON.stringify({
@@ -45,6 +94,10 @@ const LoginPage = () => {
                       return res.json().then((data)=>{
                         console.log(data);
                         alert("SignUp successfully!");
+                        emailRef.current.value="";
+                        passRef.current.value="";
+                        conformpassRef.current.value="";
+                        setIsLogin(true);
                       })
                    }
                    else{
@@ -52,7 +105,8 @@ const LoginPage = () => {
                         console.log(err)
                       })
                    }
-              })
+              });
+            }
         }
         else{
             //    console.log("password not match");
@@ -73,32 +127,32 @@ const LoginPage = () => {
         </div>
     <div className={styles.bgc} style={{width:"fit-content"}}>
 
-        <h2 className='text-center fluid' style={{color:"darkgray"}}>SignUp</h2>
+        <h2 className='text-center fluid' style={{color:"darkgray"}}>{isLogin?"Login":"SignUp"}</h2>
        <Form onSubmit={handleSubmit}>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
-        <Form.Control type="email" placeholder="Enter email" ref={emailRef} required/>
+        <Form.Control type="email" placeholder="Enter email" size="sm" ref={emailRef} required/>
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
         <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" ref={passRef} required/>
+        <Form.Control type="password" placeholder="Password" size="sm" ref={passRef} required/>
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formBasicPassword">
+      {!isLogin&&<Form.Group className="mb-3" controlId="formBasicPassword">
         <Form.Label>Conform Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" ref={conformpassRef} required/>
-      </Form.Group>
+        <Form.Control type="password" placeholder="Password" size="sm" ref={conformpassRef} required/>
+      </Form.Group>}
       
       <Button className='d-flex m-auto rounded-start-5 rounded-end-5 ps-5 pe-5' variant="primary" type="submit">
-        Sign up
+        {isLogin?"Log in":"Sign up"}
       </Button>
     </Form>
     </div>
 
-      <p className='border p-2 pe-5 ps-5 m-auto mt-2 bg-light' style={{width:"fit-content"}}>have an account? Login!</p>
+      <p onClick={()=>setIsLogin(!isLogin)} className='border p-2 m-auto mt-2 bg-light text-center ps-3 pe-3' style={isLogin?{width:"fit-content",color:"red"}:{width:"fit-content",color:"orange"}}>{isLogin?"Don't have an account? Sign up":"Have an account? Login"}</p>
     </>
   )
 }
 
-export default LoginPage
+export default SignUp

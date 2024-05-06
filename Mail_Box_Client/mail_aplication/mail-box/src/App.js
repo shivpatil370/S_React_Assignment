@@ -1,11 +1,15 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import LoginPage from './components/LoginPage';
+// import SignUp from './components/SignUp';
+// import Navbar from './components/navbar/Navbar';
+import { Outlet } from 'react-router-dom';
 
 function App() {
   return (
     <div>
-      <LoginPage/>
+      {/* <SignUp/> */}
+      {/* <Navbar/> */}
+      <Outlet/>
     </div>
   );
 }
