@@ -7,19 +7,19 @@ import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
   const [isLogin,setIsLogin]=useState();
-    const emailRef=useRef();
-    const passRef=useRef();
-    const conformpassRef=useRef();
-
-    const navigate=useNavigate()
-
+  const emailRef=useRef();
+  const passRef=useRef();
+  const conformpassRef=useRef();
+  
+  const navigate=useNavigate();
+    
     useEffect(()=>{
         document.body.style.backgroundColor="whitesmoke";
 
         return ()=>{
             document.body.style.backgroundColor="";
         }
-    });
+    },[]);
 
 
     const handleSubmit=(e)=>{
@@ -60,7 +60,7 @@ const SignUp = () => {
                       return res.json().then((data)=>{
                         console.log(data.idToken);
                         alert("LogIn successfully!");
-                        navigate("/home")
+                        navigate("/home");
                       })
                    }
                    else{
