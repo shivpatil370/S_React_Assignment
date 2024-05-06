@@ -41,7 +41,7 @@ const SignUp = () => {
         }
 
         // console.log(obj);
-        if(isLogin ||obj.password===obj.conformpass){
+        if(isLogin || obj.password===obj.conformpass){
               if(isLogin){
                 //LOGIN...
                 fetch("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyA7K1snfsZcqfce3uNQVIOrjQjmUM1zm8k",{

@@ -3,13 +3,15 @@ import './App.css';
 // import SignUp from './components/SignUp';
 // import Navbar from './components/navbar/Navbar';
 import { Outlet } from 'react-router-dom';
+import ComposeMail from './components/sidebar/ComposeMail';
 
 function App() {
   return (
     <div>
       {/* <SignUp/> */}
       {/* <Navbar/> */}
-      <Outlet/>
+      {/* <Outlet/> */}
+      <ComposeMail/>
     </div>
   );
 }
