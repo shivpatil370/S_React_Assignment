@@ -60,8 +60,9 @@ const SignUp = () => {
                       return res.json().then((data)=>{
                         // console.log(data.idToken);
                         console.log(data.email);
+                        localStorage.setItem("email",data.email);
                         alert("LogIn successfully!");
-                        navigate("/home");
+                        navigate("/");
                       })
                    }
                    else{

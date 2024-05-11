@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { authActions } from '../redux-store/AuthSlice';
 
 
-let stars=<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
-        <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"/>
-      </svg>
+let stars=<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" viewBox="0 0 16 16">
+<circle cx="8" cy="8" r="8"/>
+</svg>
+      
 
 const SentPage = () => {
   const [mailData,setMailData]=useState({});
   // console.log(mailData)
+      const dispatch=useDispatch();
+
+  
+
 
     useEffect(()=>{
           fetch(`https://mail-box-api-default-rtdb.firebaseio.com/sentbox.json`)
@@ -25,7 +32,24 @@ const SentPage = () => {
                 })
               }
           })
-    },[])
+    },[]);
+
+
+    useEffect(()=>{
+      // let totalAllInbox=0;
+      let inboxNewTotal=0;
+    Object.entries(mailData).map(([key,ele])=>{
+  //    if(key){
+  //     totalAllInbox++;
+  //   }
+    if(ele.isNotReadMail){
+       inboxNewTotal++;
+    }
+  });
+  // console.log(totalAllInbox);
+  dispatch(authActions.totalSentBox(inboxNewTotal))
+  // console.log(inboxNewTotal)
+    })
 
   return (
 
@@ -52,18 +76,22 @@ const SentPage = () => {
       
       {
         Object.entries(mailData).map(([key,ele])=>{
+                // console.log(ele.todayDate);
+                // console.log(ele.isNotReadMail);
+                
+
           let newStr;
-          let maxLength=25;
+          let maxLength=55;
           if(ele.subject.length > maxLength) {
               newStr = ele.subject.substring(0, maxLength) + "...";
           } else {
               newStr = ele.subject;
           }
-          return <NavLink to={`/sentmail/readsentmail/${key}`} key={key}><div className='d-flex mt-2 mb-2'>
+          return <NavLink to={`/sentmail/readsentmail/${key}`} ><div key={key} className='d-flex border-bottom-0 text-dark pt-1 pb-1' style={ele?.isNotReadMail?{backgroundColor:"lightgray"}:{}}>
                
                   <div className='d-flex gap-2 align-content-center justify-content-start ps-2'>
                      <span><input type='checkbox'></input></span>
-                     <span>{stars}</span>
+                     {ele?.isNotReadMail&&<span className='text-success'>{stars}</span>}
                      <span>To:{ele.to}</span>
                    </div>
 
@@ -72,7 +100,7 @@ const SentPage = () => {
                    </div>
                     
                     <div className='position-fixed end-0'>
-                      <p className='pe-2'>12/12/12</p>
+                      <p className='pe-2'>{ele?.todayDate}</p>
                     </div>
                    
           </div></NavLink>
