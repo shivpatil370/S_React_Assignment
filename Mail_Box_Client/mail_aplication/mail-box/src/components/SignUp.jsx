@@ -58,7 +58,8 @@ const SignUp = () => {
               .then((res)=>{
                    if(res.ok){
                       return res.json().then((data)=>{
-                        console.log(data.idToken);
+                        // console.log(data.idToken);
+                        console.log(data.email);
                         alert("LogIn successfully!");
                         navigate("/home");
                       })

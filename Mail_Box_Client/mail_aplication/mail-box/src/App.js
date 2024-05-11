@@ -1,17 +1,18 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 // import SignUp from './components/SignUp';
-// import Navbar from './components/navbar/Navbar';
-import { Outlet } from 'react-router-dom';
-import ComposeMail from './components/sidebar/ComposeMail';
+import Navbar from './components/navbar/Navbar';
+import BodyPart from './components/bodyPart/BodyPart';
+// import ComposeMail from './components/sidebar/ComposeMail';
 
 function App() {
   return (
     <div>
       {/* <SignUp/> */}
-      {/* <Navbar/> */}
+      <Navbar/>
       {/* <Outlet/> */}
-      <ComposeMail/>
+      {/* <ComposeMail/> */}
+      <BodyPart/>
     </div>
   );
 }
