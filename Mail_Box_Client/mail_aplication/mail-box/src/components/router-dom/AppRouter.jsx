@@ -5,6 +5,8 @@ import SignUp from "../SignUp";
 import ComposeMail from "../sidebar/ComposeMail";
 import SentPage from "../sidebar/SentPage";
 import ReadSentMail from "../sidebar/ReadSentMail";
+import InboxPage from "../sidebar/InboxPage";
+import ReadInboxMail from "../sidebar/ReadInboxMail";
 
 const appRouter=createBrowserRouter([
      {
@@ -13,6 +15,10 @@ const appRouter=createBrowserRouter([
         children:[
             {
                 path:"/",
+                element:<InboxPage/>
+            },
+            {
+                path:"/compose",
                 element:<ComposeMail/>
             },
             {
@@ -30,7 +36,12 @@ const appRouter=createBrowserRouter([
             {
                 path:"/sentmail/readsentmail/:id",
                 element:<ReadSentMail/>
+            },
+            {
+                path:"/inbox/readinboxmail/:id",
+                element:<ReadInboxMail/>
             }
+            
             
         ]
      }
