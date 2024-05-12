@@ -13,6 +13,7 @@ const SentPage = () => {
   const [mailData,setMailData]=useState({});
   const mail=localStorage.getItem("email")||"";
   const [email,setEmail]=useState(mail);
+  const [err,setErr]=useState(true);
   // console.log(mailData)
       const dispatch=useDispatch();
       const renders=useSelector(store=>store.auth.render)
@@ -22,26 +23,37 @@ const SentPage = () => {
       // console.log(cleanedEmail); 
 
     useEffect(()=>{
-          fetch(`https://mail-box-api-default-rtdb.firebaseio.com/${cleanedEmail}/sentbox.json`)
-          .then((res)=>{
-              if(res.ok){
-                return res.json().then((data)=>{
-                  // console.log(data)
-                  if(data){
+     const timer= setInterval(()=>{
+      console.log('working...')
+        setErr(true)
+            fetch(`https://mail-box-api-default-rtdb.firebaseio.com/${cleanedEmail}/sentbox.json`)
+            .then((res)=>{
+                if(res.ok){
+                  return res.json().then((data)=>{
+                    // console.log(data)
+                    // if(data){
+  
+                      setMailData(data);
+                      setErr(false);
+                    // }
+                    // else{
+                    //   setMailData([])
+                    // }
+                  })
+                }
+                else{
+                  return res.json().then((err)=>{
+                    console.log(err)
+                  })
+                }
+            });
 
-                    setMailData(data)
-                  }
-                  else{
-                    setMailData([])
-                  }
-                })
-              }
-              else{
-                return res.json().then((err)=>{
-                  console.log(err)
-                })
-              }
-          })
+      },5000);
+
+      return ()=>{
+        clearInterval(timer);
+      }
+      
     },[renders]);
 
 
@@ -67,7 +79,7 @@ const SentPage = () => {
 
 
 
-  return !mailData?<h1>Opps,empty sent-box!</h1>:(
+  return err?<h1 className='text-center text-danger mt-5'>Loading...</h1>:(
 
     <div className='me-2 w-100'>
 

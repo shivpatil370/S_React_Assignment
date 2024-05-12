@@ -14,7 +14,8 @@ const InboxPage = () => {
 const [mailData,setMailData]=useState(null);
 const mail=localStorage.getItem("email")||"";
   const [email,setEmail]=useState(mail);
-  const [abc,setAbc]=useState("")
+  const [abc,setAbc]=useState("");
+  const [err,setErr]=useState(true);
 // console.log(abc)
   // const renders=useSelector(store=>store.auth.render);
 const dispatch=useDispatch()
@@ -27,21 +28,30 @@ const dispatch=useDispatch()
       // console.log(cleanedEmail); 
   
       useEffect(()=>{
-            fetch(`https://mail-box-api-default-rtdb.firebaseio.com/${cleanedEmail}/inbox.json`)
-            .then((res)=>{
-                if(res.ok){
-                  return res.json().then((data)=>{
-                    // console.log(data)
-                    setMailData(data || {})
-                    dispatch(authActions.renderdata(data))
-                  })
-                }
-                else{
-                  return res.json().then((err)=>{
-                    console.log(err)
-                  })
-                }
-            })
+        setErr(true);
+            const timer=setInterval(()=>{
+              fetch(`https://mail-box-api-default-rtdb.firebaseio.com/${cleanedEmail}/inbox.json`)
+              .then((res)=>{
+                  if(res.ok){
+                    return res.json().then((data)=>{
+                      // console.log(data)
+                      setMailData(data || {})
+                      dispatch(authActions.renderdata(data));
+                      setErr(false)
+                    })
+                  }
+                  else{
+                    return res.json().then((err)=>{
+                      console.log(err)
+                    })
+                  }
+              })
+            },2000);
+
+            setAbc("")
+            return ()=>{
+              clearInterval(timer);
+            }
       },[abc,cleanedEmail]);
 
 
@@ -62,7 +72,7 @@ const dispatch=useDispatch()
   
 
 
-  return !mailData?<h1>Opps,empty inbox!</h1>:(
+  return err?<h1 className='text-center text-danger mt-5'>Loading...</h1>:(
     <div className='me-2'>
 
     <div className='d-flex justify-content-between mt-2 ms-2 me-2'>

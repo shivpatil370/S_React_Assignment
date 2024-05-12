@@ -12,7 +12,6 @@ function App() {
       {/* <SignUp/> */}
       {/* <ComposeMail/> */}
       <Navbar/>
-      {/* <Outlet/> */}
       {/* <ComposeMail/> */}
       <BodyPart/>
     </div>
