@@ -1,9 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import SignUp from './components/SignUp';
+// import SignUp from './components/SignUp';
 import Navbar from './components/navbar/Navbar';
 import BodyPart from './components/bodyPart/BodyPart';
-import ComposeMail from './components/sidebar/ComposeMail';
+// import ComposeMail from './components/sidebar/ComposeMail';
 // import ComposeMail from './components/sidebar/ComposeMail';
 
 function App() {
@@ -12,7 +12,6 @@ function App() {
       {/* <SignUp/> */}
       {/* <ComposeMail/> */}
       <Navbar/>
-      {/* <ComposeMail/> */}
       <BodyPart/>
     </div>
   );
