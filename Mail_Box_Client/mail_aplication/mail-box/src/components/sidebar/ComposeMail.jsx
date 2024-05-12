@@ -8,6 +8,8 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { authActions } from '../redux-store/AuthSlice';
 
 
 const ComposeMail = () => {
@@ -17,6 +19,8 @@ const ComposeMail = () => {
 // console.log(email)
   const toRef=useRef();
   const subjectRef=useRef();
+
+  const dispach=useDispatch()
 
   const navigate=useNavigate();
  
@@ -60,113 +64,72 @@ const ComposeMail = () => {
           
     
               if(email){
-            // fetch(`https://mail-box-api-default-rtdb.firebaseio.com/${email}/sentbox.json`,{
-            //   method:"POST",
-            //   body:JSON.stringify(obj),
-            //   headers:{
-            //     "Content-Type":"application/json"
-            //   }
-            // })
-            // .then((res)=>{
-            //   if(res.ok){
-            //     return res.json().then((data)=>{
-            //       console.log(data);
-                  
-            //      return fetch(`https://mail-box-api-default-rtdb.firebaseio.com/${email}/sentbox.json`,{
-            //   method:"POST",
-            //   body:JSON.stringify(obj),
-            //   headers:{
-            //     "Content-Type":"application/json"
-            //   }
-            // })
-            // .then((res)=>{
-            //   if(res.ok){
-            //     return res.json().then((data)=>{
-            //       console.log(data);
-                  
-            //       // alert("Message sent successfully!");
-            //      })
-            //   }
-            //   else{
-            //    return res.json().then((err)=>{
-            //       console.log(err);
-            //       throw new Error(err.error.message);
-            //     })
-            //   }
-            //       // alert("Message sent successfully!");
-            //      })
-            //   }
-            //   else{
-            //    return res.json().then((err)=>{
-            //       console.log(err);
-            //       throw new Error(err.error.message);
-            //     })
-            //   }
-            // })
-            // .catch((err)=>{
-            //   console.log(err)
-            // })
+                  const emailid = email;
+                  const cleanedEmail = emailid.replace(/[@.]/g, '');
+                  console.log(cleanedEmail); 
 
-            function sendEmail(email, obj) {
-            return fetch(`https://mail-box-api-default-rtdb.firebaseio.com/${email}/sentbox.json`, {
-              method: "POST",
-              body: JSON.stringify(obj),
-              headers: {
-                "Content-Type": "application/json"
+                  const emailtosend = toRef.current.value;
+                  const emailtosendNewPerson = emailtosend.replace(/[@.]/g, '');
+                  console.log(emailtosendNewPerson); 
+                
+            fetch(`https://mail-box-api-default-rtdb.firebaseio.com/${cleanedEmail}/sentbox.json`,{
+              method:"POST",
+              body:JSON.stringify(obj),
+              headers:{
+                "Content-Type":"application/json"
               }
             })
-            .then((res) => {
-              if (res.ok) {
-                return res.json().then((data) => {
+            .then((res)=>{
+              if(res.ok){
+                return res.json().then((data)=>{
                   console.log(data);
-                  return fetch(`https://mail-box-api-default-rtdb.firebaseio.com/${email}/inboxjson`, {
-                    method: "POST",
-                    body: JSON.stringify(obj),
-                    headers: {
-                      "Content-Type": "application/json"
-                    }
-                  })
-                  .then((res) => {
-                    if (res.ok) {
-                      return res.json().then((data) => {
-                        console.log(data);
-                        // You can perform additional actions here
-                      });
-                    } else {
-                      return res.json().then((err) => {
-                        console.log(err);
-                        throw new Error(err.error.message);
-                      });
-                    }
-                  });
-                });
-              } else {
-                return res.json().then((err) => {
+                  runnewPromise()
+                  // alert("Message sent successfully!");
+                 })
+              }
+              else{
+               return res.json().then((err)=>{
                   console.log(err);
                   throw new Error(err.error.message);
-                });
+                })
               }
             })
-            .catch((err) => {
-              console.log(err);
+            .catch((err)=>{
+              console.log(err)
             });
-          };
 
-          Promise.all([
-            sendEmail(email, obj)])
-          .then(() => {
-            console.log("All promises resolved successfully!");
-            alert("Mail sent Successfully!")
-          })
-          .catch((error) => {
-            console.error("Error occurred:", error);
-          });
-    
-            toRef.current.value="";
-            subjectRef.current.value="";
-            setEditorState(EditorState.createEmpty());
-           
+              const runnewPromise=()=>{
+                fetch(`https://mail-box-api-default-rtdb.firebaseio.com/${emailtosendNewPerson}/inbox.json`,{
+                  method:"POST",
+                  body:JSON.stringify(obj),
+                  headers:{
+                    "Content-Type":"application/json"
+                  }
+                })
+                .then((res)=>{
+                  if(res.ok){
+                    return res.json().then((data)=>{
+                      console.log(data);
+                       dispach(authActions.renderdata(data))
+                      alert("Message sent successfully!");
+                     })
+                  }
+                  else{
+                   return res.json().then((err)=>{
+                      console.log(err);
+                      throw new Error(err.error.message);
+                    })
+                  }
+                })
+                .catch((err)=>{
+                  console.log(err)
+                });
+              }
           }
+
+          toRef.current.value="";
+          subjectRef.current.value="";
+          setEditorState(EditorState.createEmpty());
         }
         
 

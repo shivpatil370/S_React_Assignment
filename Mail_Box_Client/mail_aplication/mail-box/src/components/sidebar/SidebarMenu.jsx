@@ -3,12 +3,98 @@ import styles from "../sidebar/SidebarMenu.module.css";
 import { NavLink } from "react-router-dom";
 import "./SidebarMenu.css"
 import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 const SidebarMenu = () => {
-
+  const mail=localStorage.getItem("email");
+  const [email,setEmail]=useState(mail);
+  const [mailData,setMailData]=useState({});
+  const [sentMailData,setSentMailData]=useState({});
   const totalinbox=useSelector(store=>store?.auth?.totalInboxItems);
+  const [totals,setTotals]=useState(totalinbox)
   const totalSentbox=useSelector(store=>store?.auth?.totalSentBoxItems);
-  // console.log(totalinbox)
+  const [totalSent,setTotalSent]=useState(totalSentbox);
+
+  const renders=useSelector(store=>store.auth.render);
+  // console.log(renders)
+
+  const emailid = email;
+  const cleanedEmail = emailid.replace(/[@.]/g, '');
+  // console.log(cleanedEmail); 
+  useEffect(()=>{
+    fetch(`https://mail-box-api-default-rtdb.firebaseio.com/${cleanedEmail}/inbox.json`)
+    .then((res)=>{
+        if(res.ok){
+          return res.json().then((data)=>{
+            // console.log(data)
+            setMailData(data)
+          })
+        }
+        else{
+          return res.json().then((err)=>{
+            console.log(err)
+          })
+        }
+    })
+},[renders]);
+
+//.....................................SENT-BOX....................................
+
+useEffect(()=>{
+  fetch(`https://mail-box-api-default-rtdb.firebaseio.com/${cleanedEmail}/sentbox.json`)
+  .then((res)=>{
+      if(res.ok){
+        return res.json().then((data)=>{
+          // console.log(data)
+          setSentMailData(data)
+        })
+      }
+      else{
+        return res.json().then((err)=>{
+          console.log(err)
+        })
+      }
+  })
+},[renders]);
+
+useEffect(()=>{
+       
+  // let totalAllInbox=0;
+  let inboxNewTotal=0;
+Object.entries(mailData).map(([key,ele])=>{
+//    if(key){
+//     totalAllInbox++;
+//   }
+if(ele.isNotReadMail){
+   inboxNewTotal++;
+}
+});
+// console.log(totalAllInbox);
+setTotals(inboxNewTotal);
+// console.log(inboxNewTotal);
+
+},[mailData]);
+
+
+// ........................sentbox...........................
+useEffect(()=>{
+       
+  // let totalAllInbox=0;
+  let inboxNewTotal1=0;
+Object.entries(sentMailData).map(([key,ele])=>{
+//    if(key){
+//     totalAllInbox++;
+//   }
+if(ele.isNotReadMail){
+   inboxNewTotal1++;
+}
+});
+// console.log(totalAllInbox);
+setTotalSent(inboxNewTotal1);
+// console.log(inboxNewTotal);
+
+},[sentMailData])
+
 
   return (
     <div>
@@ -20,7 +106,7 @@ const SidebarMenu = () => {
 </svg>
                 </div>
                 Inbox
-                 {totalinbox&&<span className="ms-1 border-0 ps-2 pe-2 bg-info rounded-5">{totalinbox}</span>}
+                 {totals>0&&<span className="ms-1 border-0 ps-2 pe-2 bg-info rounded-5"><span className="text-danger text-decoration-none">new </span>{totals}</span>}
                 </li></NavLink>
 
                 <li style={{padding:"0.1rem",paddingTop:"0.3rem",paddingBottom:"0.3rem",paddingLeft:"1.4rem",display:"flex"}} className={styles.hvr}>
@@ -45,7 +131,7 @@ const SidebarMenu = () => {
 </svg>
                 </div>
                 Sent 
-                {totalSentbox&&<span className="ms-1 border-0 ps-2 pe-2 bg-info rounded-5">{totalSentbox}</span>}
+                {totalSentbox>0&&<span className="ms-1 border-0 ps-2 pe-2 bg-info rounded-5"><span className="text-danger text-decoration-none">new </span>{totalSent}</span>}
                 </li></NavLink>
 
                 <li style={{padding:"0.1rem",paddingTop:"0.3rem",paddingBottom:"0.3rem",paddingLeft:"1.4rem",display:"flex"}} className={styles.hvr}>

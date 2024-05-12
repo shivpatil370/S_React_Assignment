@@ -1,6 +1,6 @@
 // import React from 'react'
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { authActions } from '../redux-store/AuthSlice';
 
@@ -12,20 +12,28 @@ let stars=<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="c
 
 const InboxPage = () => {
 const [mailData,setMailData]=useState({});
-
+const mail=localStorage.getItem("email");
+  const [email,setEmail]=useState(mail);
+  const [abc,setAbc]=useState("")
+// console.log(abc)
+  // const renders=useSelector(store=>store.auth.render);
 const dispatch=useDispatch()
     // console.log(mailData)
 
 
     
+      const emailid = email;
+      const cleanedEmail = emailid.replace(/[@.]/g, '');
+      // console.log(cleanedEmail); 
   
       useEffect(()=>{
-            fetch(`https://mail-box-api-default-rtdb.firebaseio.com/sentbox.json`)
+            fetch(`https://mail-box-api-default-rtdb.firebaseio.com/${cleanedEmail}/inbox.json`)
             .then((res)=>{
                 if(res.ok){
                   return res.json().then((data)=>{
                     // console.log(data)
                     setMailData(data)
+                    dispatch(authActions.renderdata(data))
                   })
                 }
                 else{
@@ -34,10 +42,11 @@ const dispatch=useDispatch()
                   })
                 }
             })
-      },[]);
+      },[abc,cleanedEmail]);
 
 
       useEffect(()=>{
+       
         // let totalAllInbox=0;
         let inboxNewTotal=0;
       Object.entries(mailData).map(([key,ele])=>{
@@ -50,26 +59,30 @@ const dispatch=useDispatch()
     });
     // console.log(totalAllInbox);
     dispatch(authActions.totalInbox(inboxNewTotal))
-    // console.log(inboxNewTotal)
-      })
+    // console.log(inboxNewTotal);
+  
+      },[mailData])
   
 
-  return (
+
+  return !mailData?<h1>Opps,empty inbox!</h1>:(
     <div className='me-2'>
 
     <div className='d-flex justify-content-between mt-2 ms-2 me-2'>
           <div>
+            <span title='refresh' onClick={()=>setAbc("rerender deta")}>
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
       <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"/>
       <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466"/>
     </svg>
-    
+    </span>
+
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
       <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
     </svg>
           </div>
           <div>
-            <p>Sent</p>
+            <p>inbox</p>
           </div>
           </div>
     
@@ -92,7 +105,7 @@ const dispatch=useDispatch()
                       <div className='d-flex gap-2 align-content-center justify-content-start ps-2'>
                          <span><input type='checkbox'></input></span>
                          {ele?.isNotReadMail&&<span className='text-success'>{stars}</span>}
-                         <span>To:{ele.to}</span>
+                         <span>From: {ele.to}</span>
                        </div>
     
                        <div className='position-fixed start-50'>
@@ -100,7 +113,7 @@ const dispatch=useDispatch()
                        </div>
                         
                         <div className='position-fixed end-0'>
-                          <p className='pe-2'>{ele?.todayDate}</p>
+                          <p className='pe-4'>{ele?.todayDate}</p>
                         </div>
                        
               </div></NavLink>

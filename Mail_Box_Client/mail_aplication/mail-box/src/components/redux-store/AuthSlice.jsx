@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 
- const init={isLoggedIn:false,totalInboxItems:0,totalSentBoxItems:0}
+ const init={isLoggedIn:false,totalInboxItems:0,totalSentBoxItems:0,render:[]}
 const authSlice=createSlice({
     name:'auth',
     initialState:init,
@@ -19,6 +19,9 @@ const authSlice=createSlice({
         },
         totalSentBox(state,action){
             state.totalSentBoxItems=action.payload;
+        },
+        renderdata(state,action){
+           state.render=action.payload;
         }
     }
 });

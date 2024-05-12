@@ -1,9 +1,12 @@
 // import { Button } from 'bootstrap';
-import React from 'react'
+import React, { useState } from 'react'
 import Dropdown from 'react-bootstrap/Dropdown';
 
 
 const RightNav = () => {
+  const mail=localStorage.getItem("email");
+  const [email,setEmail]=useState(mail);
+
   return (
     <div className='d-flex gap-3 align-items-center'>
 
@@ -24,8 +27,8 @@ const RightNav = () => {
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item className='text-center' href="#/action-1">email</Dropdown.Item>
-        <p className='text-center bg-info ps-1 pe-1 d-flex m-auto text-white mt-4' style={{width:"fit-Content",cursor:"pointer"}}>sign out</p>
+        <Dropdown.Item className='text-center' href="#/action-1">{email}</Dropdown.Item>
+        <p onClick={()=>localStorage.clear()} className='text-center bg-info ps-1 pe-1 d-flex m-auto text-white mt-4' style={{width:"fit-Content",cursor:"pointer"}}>sign out</p>
       </Dropdown.Menu>
     </Dropdown>
 

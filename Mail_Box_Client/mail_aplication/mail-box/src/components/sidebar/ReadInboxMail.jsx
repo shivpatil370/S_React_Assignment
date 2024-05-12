@@ -11,20 +11,40 @@ const ReadInboxMail = () => {
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [email,setEmail]=useState("");
   const [subject,setSubjet]=useState("");
+  const mail=localStorage.getItem("email");
+  const [emails,setEmails]=useState(mail);
+  const [isRead,setIsRead]=useState(false);
+  const [date,setDate]=useState("12/12/12")
   const { id } = useParams(); 
 //   console.log(id);
 
-const navigate=useNavigate()
+const navigate=useNavigate();
 
+var name=""
+if(email){
+  for(let i=0; i<email.length; i++){
+      if(email[i]==="@"){
+        break;
+      }
+      else{
+        name=name+email[i];
+      }
+  }
+}
+
+      const emailid = emails;
+      const cleanedEmail = emailid.replace(/[@.]/g, '');
 useEffect(() => {
     const fetchContent = async () => {
       try {
         const response = await fetch(
-          `https://mail-box-api-default-rtdb.firebaseio.com/sentbox/${id}.json`
+          `https://mail-box-api-default-rtdb.firebaseio.com/${cleanedEmail}/inbox/${id}.json`
         );
         const rawData = await response.json();
+             setDate(rawData.todayDate)
              setEmail(rawData.to);
              setSubjet(rawData.subject);
+             setIsRead(rawData.isNotReadMail);
 
         // Check if rawData.messages has the required structure
         if (rawData && rawData.messages && rawData.messages.blocks) {
@@ -44,7 +64,22 @@ useEffect(() => {
     };
   
     fetchContent();
-  }, [id]);
+  }, [cleanedEmail]);
+
+
+  useEffect(()=>{
+    if(isRead){
+      fetch(`https://mail-box-api-default-rtdb.firebaseio.com/${cleanedEmail}/inbox/${id}.json`,{
+       method:'PATCH',
+       body:JSON.stringify({
+         isNotReadMail:false
+       })
+       
+      })
+      
+    }
+},[isRead])
+
 
   return (
     <div>
@@ -91,10 +126,10 @@ useEffect(() => {
 </svg>
 
 <div>
-<h6>{"name"}</h6>
+<h6>{name}</h6>
 <p>{email}</p>
 </div>
-<p className='position-fixed end-0 me-2'>{"12/12/12"}</p>
+<p className='position-fixed end-0 me-2'>{date}</p>
 </div>
 </div>
      
@@ -106,6 +141,9 @@ useEffect(() => {
         wrapperClassName="wrapper-class"
         editorClassName="editor-class"
       />
+      </div>
+      <div>
+        <button className='mt-4 ms-2 bg-success text-white border' disabled>reply</button>
       </div>
     </div>
   )
