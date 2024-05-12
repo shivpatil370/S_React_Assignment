@@ -65,7 +65,7 @@ Object.entries(mailData).map(([key,ele])=>{
 //    if(key){
 //     totalAllInbox++;
 //   }
-if(ele.isNotReadMail){
+if(ele?.isNotReadMail){
    inboxNewTotal++;
 }
 });
