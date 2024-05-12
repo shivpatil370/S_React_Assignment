@@ -9,7 +9,7 @@ const SideBar = () => {
 
   return (
     // d-none d-md-block d-lg-block
-    <div className='bg-light hover-overlay' style={{width:"20%",height:"89vh",border:""}}>
+    <div className='bg-light hover-overlay d-none d-md-block d-lg-block' style={{width:"20%",height:"89vh",border:""}}>
 
       <div onClick={()=>navigate("/compose")}>
         <h4 className='ms-2 mt-2 p-3 rounded-4' style={{backgroundColor:"#c2e7ff", width:"fit-Content"}}>

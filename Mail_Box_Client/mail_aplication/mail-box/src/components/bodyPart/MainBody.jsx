@@ -5,7 +5,7 @@ import "../sidebar/SidebarMenu.css"
 
 const MainBody = () => {
   return (
-    <div className='border' style={{width:"80%",height:"89vh"}}>
+    <div className='border w-100' style={{width:"80%",height:"89vh"}}>
         <Outlet/>
     </div>
   )

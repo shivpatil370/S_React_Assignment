@@ -68,7 +68,7 @@ const SentPage = () => {
 
   return !mailData?<h1>Opps,empty sent-box!</h1>:(
 
-    <div className='me-2'>
+    <div className='me-2 w-100'>
 
 <div className='d-flex justify-content-between mt-2 ms-2 me-2'>
       <div>
