@@ -105,7 +105,9 @@ const SentPage = () => {
           return <NavLink key={key} to={`/sentmail/readsentmail/${key}`} ><div className='d-flex border-bottom-0 text-dark pt-1 pb-1 mb-1' style={ele?.isNotReadMail?{backgroundColor:"lightgray"}:{}}>
                
                   <div className='d-flex gap-2 align-content-center justify-content-start ps-2'>
-                     <span><input type='checkbox'></input></span>
+                     <span><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+  <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z"/>
+</svg>  </span>
                      {ele?.isNotReadMail&&<span className='text-success'>{stars}</span>}
                      <span>To:{ele?.to}</span>
                    </div>
