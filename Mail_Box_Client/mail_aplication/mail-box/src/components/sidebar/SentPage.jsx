@@ -11,7 +11,7 @@ let stars=<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="c
 
 const SentPage = () => {
   const [mailData,setMailData]=useState({});
-  const mail=localStorage.getItem("email");
+  const mail=localStorage.getItem("email")||"";
   const [email,setEmail]=useState(mail);
   // console.log(mailData)
       const dispatch=useDispatch();
@@ -48,7 +48,8 @@ const SentPage = () => {
     useEffect(()=>{
       // let totalAllInbox=0;
       let inboxNewTotal=0;
-    Object.entries(mailData).map(([key,ele])=>{
+      if(mailData ){ 
+      mailData&&Object.entries(mailData).map(([key,ele])=>{
   //    if(key){
   //     totalAllInbox++;
   //   }
@@ -58,7 +59,7 @@ const SentPage = () => {
   });
   // console.log(totalAllInbox);
   dispatch(authActions.totalSentBox(inboxNewTotal))
-  return
+}
   // console.log(inboxNewTotal)
     },[mailData])
 
@@ -90,7 +91,7 @@ const SentPage = () => {
 
       
       {
-        Object.entries(mailData).map(([key,ele])=>{
+        mailData&&Object.entries(mailData).map(([key,ele])=>{
                 // console.log(ele.todayDate);
                 // console.log(ele.isNotReadMail);
                 

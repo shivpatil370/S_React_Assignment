@@ -11,8 +11,8 @@ let stars=<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="c
 
 
 const InboxPage = () => {
-const [mailData,setMailData]=useState({});
-const mail=localStorage.getItem("email");
+const [mailData,setMailData]=useState(null);
+const mail=localStorage.getItem("email")||"";
   const [email,setEmail]=useState(mail);
   const [abc,setAbc]=useState("")
 // console.log(abc)
@@ -32,7 +32,7 @@ const dispatch=useDispatch()
                 if(res.ok){
                   return res.json().then((data)=>{
                     // console.log(data)
-                    setMailData(data)
+                    setMailData(data || {})
                     dispatch(authActions.renderdata(data))
                   })
                 }
@@ -45,22 +45,19 @@ const dispatch=useDispatch()
       },[abc,cleanedEmail]);
 
 
+
       useEffect(()=>{
        
-        // let totalAllInbox=0;
-        let inboxNewTotal=0;
-      Object.entries(mailData).map(([key,ele])=>{
-    //    if(key){
-    //     totalAllInbox++;
-    //   }
-      if(ele.isNotReadMail){
-         inboxNewTotal++;
-      }
-    });
-    // console.log(totalAllInbox);
-    dispatch(authActions.totalInbox(inboxNewTotal))
-    // console.log(inboxNewTotal);
-  
+        let inboxNewTotal = 0;
+        // Check if mailData is an object before mapping
+        if (mailData && typeof mailData === 'object') {
+          Object?.entries(mailData).forEach(([key, ele]) => {
+            if (ele?.isNotReadMail) {
+              inboxNewTotal++;
+            }
+          });
+          dispatch(authActions.totalInbox(inboxNewTotal));
+        }
       },[mailData])
   
 
@@ -90,22 +87,22 @@ const dispatch=useDispatch()
     
           
           {
-            Object.entries(mailData).map(([key,ele])=>{
+            mailData&&Object.entries(mailData).map(([key,ele])=>{
                 // console.log(ele?.todayDate);
                 // console.log(ele?.isNotReadMail);
               let newStr;
               let maxLength=55;
-              if(ele.subject.length > maxLength) {
-                  newStr = ele.subject.substring(0, maxLength) + "...";
+              if(ele?.subject.length > maxLength) {
+                  newStr = ele?.subject.substring(0, maxLength) + "...";
               } else {
-                  newStr = ele.subject;
+                  newStr = ele?.subject;
               }
               return <NavLink to={`/inbox/readinboxmail/${key}`} key={key}><div className='d-flex mt-2 mb-2 border-bottom-0 text-dark pt-1 pb-1' style={ele?.isNotReadMail?{backgroundColor:"lightgray"}:{}}>
                    
                       <div className='d-flex gap-2 align-content-center justify-content-start ps-2'>
                          <span><input type='checkbox'></input></span>
                          {ele?.isNotReadMail&&<span className='text-success'>{stars}</span>}
-                         <span>From: {ele.to}</span>
+                         <span>From: {ele?.to}</span>
                        </div>
     
                        <div className='position-fixed start-50'>

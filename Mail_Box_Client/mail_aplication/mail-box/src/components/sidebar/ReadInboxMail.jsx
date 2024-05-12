@@ -11,7 +11,7 @@ const ReadInboxMail = () => {
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [email,setEmail]=useState("");
   const [subject,setSubjet]=useState("");
-  const mail=localStorage.getItem("email");
+  const mail=localStorage.getItem("email")||"";
   const [emails,setEmails]=useState(mail);
   const [isRead,setIsRead]=useState(false);
   const [date,setDate]=useState("12/12/12")
@@ -34,7 +34,8 @@ if(email){
 
       const emailid = emails;
       const cleanedEmail = emailid.replace(/[@.]/g, '');
-useEffect(() => {
+useEffect(() => 
+  {
     const fetchContent = async () => {
       try {
         const response = await fetch(

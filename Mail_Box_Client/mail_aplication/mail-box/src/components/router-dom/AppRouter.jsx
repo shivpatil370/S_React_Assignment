@@ -1,4 +1,4 @@
-import {createBrowserRouter} from "react-router-dom";
+import {Navigate, createBrowserRouter} from "react-router-dom";
 import App from "../../App";
 import Navbar from "../navbar/Navbar";
 import SignUp from "../SignUp";
@@ -7,6 +7,14 @@ import SentPage from "../sidebar/SentPage";
 import ReadSentMail from "../sidebar/ReadSentMail";
 import InboxPage from "../sidebar/InboxPage";
 import ReadInboxMail from "../sidebar/ReadInboxMail";
+// import { useSelector } from "react-redux";
+
+
+// const PrivateRouter=({children})=>{
+//     const tokens=useSelector(store=>store.auth.token);
+//     // console.log(tokens);
+//     return tokens?children:<Navigate to="/login"/>
+// }
 
 const appRouter=createBrowserRouter([
      {

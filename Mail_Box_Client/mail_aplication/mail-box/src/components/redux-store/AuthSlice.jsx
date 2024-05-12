@@ -2,14 +2,15 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 
- const init={isLoggedIn:false,totalInboxItems:0,totalSentBoxItems:0,render:[]}
+ const init={token:"",totalInboxItems:0,totalSentBoxItems:0,render:[]}
 const authSlice=createSlice({
     name:'auth',
     initialState:init,
 
     reducers:{
-        login(state){
-            state.isLoggedIn=true
+        login(state,action){
+            state.token=action.payload;
+            
         },
         logout(state){
             state.isLoggedIn=false

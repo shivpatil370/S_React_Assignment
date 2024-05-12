@@ -4,7 +4,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 
 const RightNav = () => {
-  const mail=localStorage.getItem("email");
+  const mail=localStorage.getItem("email")||"";
   const [email,setEmail]=useState(mail);
 
   return (

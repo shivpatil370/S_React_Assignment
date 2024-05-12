@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
 const SidebarMenu = () => {
-  const mail=localStorage.getItem("email");
+  const mail=localStorage.getItem("email")||'';
   const [email,setEmail]=useState(mail);
   const [mailData,setMailData]=useState({});
   const [sentMailData,setSentMailData]=useState({});

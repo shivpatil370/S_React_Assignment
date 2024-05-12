@@ -4,12 +4,22 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import styles from "./SignUp.module.css"
 import { useNavigate } from 'react-router-dom';
+// import {useDispatch} from 'react-redux';
+// import { authActions } from './redux-store/AuthSlice';
 
 const SignUp = () => {
   const [isLogin,setIsLogin]=useState();
   const emailRef=useRef();
   const passRef=useRef();
   const conformpassRef=useRef();
+
+  // const localtkn=localStorage.getItem("token")
+  // const [token,setToken]=useState(localtkn);
+  
+  // const dispatch=useDispatch();
+  // if(token){
+  //   dispatch(authActions.login(token));
+  // }
   
   const navigate=useNavigate();
     
@@ -61,6 +71,8 @@ const SignUp = () => {
                         // console.log(data.idToken);
                         console.log(data.email);
                         localStorage.setItem("email",data.email);
+                        localStorage.setItem("token",data.idToken);
+                        // dispatch(authActions.login(data.idToken));
                         alert("LogIn successfully!");
                         navigate("/");
                       })
