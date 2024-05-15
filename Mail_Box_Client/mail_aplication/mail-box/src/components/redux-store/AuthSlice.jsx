@@ -27,5 +27,10 @@ const authSlice=createSlice({
     }
 });
 
+// let x=localStorage.getItem("token");
+// if(x){
+//     authSlice.actions.login({payload:x});
+// }
+
 export const authActions=authSlice.actions;
 export default authSlice;

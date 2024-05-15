@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { authActions } from '../redux-store/AuthSlice';
-
+import { ColorRing } from 'react-loader-spinner';
 
 let stars=<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-circle-fill" viewBox="0 0 16 16">
 <circle cx="8" cy="8" r="8"/>
@@ -11,15 +11,20 @@ let stars=<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="c
 
 
 const InboxPage = () => {
+  let x=localStorage.getItem("token");
 const [mailData,setMailData]=useState(null);
 const mail=localStorage.getItem("email")||"";
   const [email,setEmail]=useState(mail);
   const [abc,setAbc]=useState("");
   const [err,setErr]=useState(true);
+
 // console.log(abc)
   // const renders=useSelector(store=>store.auth.render);
 const dispatch=useDispatch()
     // console.log(mailData)
+
+  
+  dispatch(authActions.login(x));
 
 
     
@@ -46,9 +51,10 @@ const dispatch=useDispatch()
                     })
                   }
               })
-            },2000);
+            },6000);
 
-            setAbc("")
+            setAbc("");
+            
             return ()=>{
               clearInterval(timer);
             }
@@ -60,19 +66,38 @@ const dispatch=useDispatch()
        
         let inboxNewTotal = 0;
         // Check if mailData is an object before mapping
-        if (mailData && typeof mailData === 'object') {
-          Object?.entries(mailData).forEach(([key, ele]) => {
-            if (ele?.isNotReadMail) {
-              inboxNewTotal++;
+        
+        let time=  setInterval(()=>{
+           if (mailData && typeof mailData === 'object') {
+
+             Object?.entries(mailData).forEach(([key, ele]) => {
+               if (ele?.isNotReadMail) {
+                 inboxNewTotal++;
+               }
+             });
+             
+             
             }
-          });
-          dispatch(authActions.totalInbox(inboxNewTotal));
+            dispatch(authActions.totalInbox(inboxNewTotal));
+          },6000);
+
+        return ()=>{
+          clearInterval(time);
         }
       },[mailData])
   
+      console.log(mailData)
 
 
-  return err?<h1 className='text-center text-danger mt-5'>Loading...</h1>:(
+  return err? <span className='d-flex justify-content-center mt-5'> <ColorRing
+    visible={true}
+    height="80"
+    width="80"
+    ariaLabel="color-ring-loading"
+    wrapperStyle={{}}
+    wrapperClass="color-ring-wrapper"
+    colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+    /></span>:!mailData?<h1>inbox empty</h1>:(
     <div className='me-2'>
 
     <div className='d-flex justify-content-between mt-2 ms-2 me-2'>
@@ -110,7 +135,10 @@ const dispatch=useDispatch()
               return <NavLink to={`/inbox/readinboxmail/${key}`} key={key}><div className='d-flex mt-2 mb-2 border-bottom-0 text-dark pt-1 pb-1' style={ele?.isNotReadMail?{backgroundColor:"lightgray"}:{}}>
                    
                       <div className='d-flex gap-2 align-content-center justify-content-start ps-2'>
-                         <span><input type='checkbox'></input></span>
+                         <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-arrow-down" viewBox="0 0 16 16">
+  <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4.5a.5.5 0 0 1-1 0V5.383l-7 4.2-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h5.5a.5.5 0 0 1 0 1H2a2 2 0 0 1-2-1.99zm1 7.105 4.708-2.897L1 5.383zM1 4v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1"/>
+  <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.354-1.646a.5.5 0 0 1-.722-.016l-1.149-1.25a.5.5 0 1 1 .737-.676l.28.305V11a.5.5 0 0 1 1 0v1.793l.396-.397a.5.5 0 0 1 .708.708z"/>
+</svg></span>
                          {ele?.isNotReadMail&&<span className='text-success'>{stars}</span>}
                          <span>From: {ele?.to}</span>
                        </div>

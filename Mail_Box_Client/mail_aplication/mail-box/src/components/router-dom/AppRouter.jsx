@@ -7,14 +7,14 @@ import SentPage from "../sidebar/SentPage";
 import ReadSentMail from "../sidebar/ReadSentMail";
 import InboxPage from "../sidebar/InboxPage";
 import ReadInboxMail from "../sidebar/ReadInboxMail";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 
-// const PrivateRouter=({children})=>{
-//     const tokens=useSelector(store=>store.auth.token);
-//     // console.log(tokens);
-//     return tokens?children:<Navigate to="/login"/>
-// }
+const PrivateRouter=({children})=>{
+    const tokens=useSelector(store=>store.auth.token)||localStorage.getItem("token");
+    console.log(tokens);
+    return tokens?children:<Navigate to="/login"/>
+}
 
 const appRouter=createBrowserRouter([
      {
@@ -23,15 +23,15 @@ const appRouter=createBrowserRouter([
         children:[
             {
                 path:"/",
-                element:<InboxPage/>
+                element:<PrivateRouter><InboxPage/></PrivateRouter>
             },
             {
                 path:"/compose",
-                element:<ComposeMail/>
+                element:<PrivateRouter><ComposeMail/></PrivateRouter>
             },
             {
                 path:"/home",
-                element:<Navbar/>
+                element:<PrivateRouter><Navbar/></PrivateRouter>
             },
             {
                 path:"/login",
@@ -39,15 +39,15 @@ const appRouter=createBrowserRouter([
             },
             {
                 path:"/sentmail",
-                element:<SentPage/>
+                element:<PrivateRouter><SentPage/></PrivateRouter>
             },
             {
                 path:"/sentmail/readsentmail/:id",
-                element:<ReadSentMail/>
+                element:<PrivateRouter><ReadSentMail/></PrivateRouter>
             },
             {
                 path:"/inbox/readinboxmail/:id",
-                element:<ReadInboxMail/>
+                element:<PrivateRouter><ReadInboxMail/></PrivateRouter>
             }
             
             

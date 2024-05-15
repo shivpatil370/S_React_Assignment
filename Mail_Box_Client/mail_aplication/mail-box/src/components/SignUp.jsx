@@ -4,8 +4,8 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import styles from "./SignUp.module.css"
 import { useNavigate } from 'react-router-dom';
-// import {useDispatch} from 'react-redux';
-// import { authActions } from './redux-store/AuthSlice';
+import {useDispatch} from 'react-redux';
+import { authActions } from './redux-store/AuthSlice';
 
 const SignUp = () => {
   const [isLogin,setIsLogin]=useState();
@@ -16,7 +16,7 @@ const SignUp = () => {
   // const localtkn=localStorage.getItem("token")
   // const [token,setToken]=useState(localtkn);
   
-  // const dispatch=useDispatch();
+  const dispatch=useDispatch();
   // if(token){
   //   dispatch(authActions.login(token));
   // }
@@ -72,7 +72,7 @@ const SignUp = () => {
                         console.log(data.email);
                         localStorage.setItem("email",data.email);
                         localStorage.setItem("token",data.idToken);
-                        // dispatch(authActions.login(data.idToken));
+                        dispatch(authActions.login(data.idToken));
                         alert("LogIn successfully!");
                         navigate("/");
                       })
@@ -148,7 +148,7 @@ const SignUp = () => {
         <Form.Control type="email" placeholder="Enter email" size="sm" ref={emailRef} required/>
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formBasicPassword">
+      <Form.Group className="mb-3" controlId="formBasicPassword1">
         <Form.Label>Password</Form.Label>
         <Form.Control type="password" placeholder="Password" size="sm" ref={passRef} required/>
       </Form.Group>

@@ -21,6 +21,7 @@ const ComposeMail = () => {
   const subjectRef=useRef();
 
   const dispach=useDispatch()
+  
 
   const navigate=useNavigate();
  
@@ -111,7 +112,8 @@ const ComposeMail = () => {
                     return res.json().then((data)=>{
                       console.log(data);
                        dispach(authActions.renderdata(data))
-                      alert("Message sent successfully!");
+                       alert("Message sent successfully!");
+                       dispach(authActions.totalSentBox(data));
                      })
                   }
                   else{

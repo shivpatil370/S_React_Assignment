@@ -16,18 +16,51 @@ const SidebarMenu = () => {
   const [totalSent,setTotalSent]=useState(totalSentbox);
 
   const renders=useSelector(store=>store.auth.render);
+
+  const totalsentboxs=useSelector(store=>store.auth.totalSentBoxItems);
   // console.log(renders)
 
   const emailid = email;
   const cleanedEmail = emailid.replace(/[@.]/g, '');
   // console.log(cleanedEmail); 
   useEffect(()=>{
-    fetch(`https://mail-box-api-default-rtdb.firebaseio.com/${cleanedEmail}/inbox.json`)
+
+    let timer=setInterval(()=>{
+
+      fetch(`https://mail-box-api-default-rtdb.firebaseio.com/${cleanedEmail}/inbox.json`)
+      .then((res)=>{
+          if(res.ok){
+            return res.json().then((data)=>{
+              // console.log(data)
+              setMailData(data)
+            })
+          }
+          else{
+            return res.json().then((err)=>{
+              console.log(err)
+            })
+          }
+      });
+
+    },2000);
+
+    return ()=>{
+      clearInterval(timer);
+    }
+},[renders]);
+
+//.....................................SENT-BOX....................................
+
+useEffect(()=>{
+
+  let time=setInterval(()=>{
+
+    fetch(`https://mail-box-api-default-rtdb.firebaseio.com/${cleanedEmail}/sentbox.json`)
     .then((res)=>{
         if(res.ok){
           return res.json().then((data)=>{
             // console.log(data)
-            setMailData(data)
+            setSentMailData(data)
           })
         }
         else{
@@ -36,32 +69,19 @@ const SidebarMenu = () => {
           })
         }
     })
-},[renders]);
 
-//.....................................SENT-BOX....................................
+  },2000);
 
-useEffect(()=>{
-  fetch(`https://mail-box-api-default-rtdb.firebaseio.com/${cleanedEmail}/sentbox.json`)
-  .then((res)=>{
-      if(res.ok){
-        return res.json().then((data)=>{
-          // console.log(data)
-          setSentMailData(data)
-        })
-      }
-      else{
-        return res.json().then((err)=>{
-          console.log(err)
-        })
-      }
-  })
-},[renders]);
+  return ()=>{
+    clearInterval(time);
+  }
+},[renders,totalsentboxs]);
 
 useEffect(()=>{
        
   // let totalAllInbox=0;
   let inboxNewTotal=0;
-Object.entries(mailData).map(([key,ele])=>{
+  mailData&&Object.entries(mailData).map(([key,ele])=>{
 //    if(key){
 //     totalAllInbox++;
 //   }
@@ -81,7 +101,7 @@ useEffect(()=>{
        
   // let totalAllInbox=0;
   let inboxNewTotal1=0;
-Object.entries(sentMailData).map(([key,ele])=>{
+  sentMailData&&Object.entries(sentMailData).map(([key,ele])=>{
 //    if(key){
 //     totalAllInbox++;
 //   }
@@ -91,6 +111,7 @@ if(ele.isNotReadMail){
 });
 // console.log(totalAllInbox);
 setTotalSent(inboxNewTotal1);
+
 // console.log(inboxNewTotal);
 
 },[sentMailData])

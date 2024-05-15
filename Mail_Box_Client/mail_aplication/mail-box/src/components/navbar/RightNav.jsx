@@ -1,11 +1,27 @@
 // import { Button } from 'bootstrap';
 import React, { useState } from 'react'
 import Dropdown from 'react-bootstrap/Dropdown';
-
+import { useDispatch } from 'react-redux';
+import { authActions } from '../redux-store/AuthSlice';
+import {useNavigate} from "react-router-dom"
 
 const RightNav = () => {
   const mail=localStorage.getItem("email")||"";
   const [email,setEmail]=useState(mail);
+  let x=localStorage.getItem("token");
+  const navigate=useNavigate()
+  
+  const dispatch=useDispatch();
+  dispatch(authActions.login(x));
+
+
+  const handleLogout=()=>{
+    // console.log("working...")
+    localStorage.clear();
+    dispatch(authActions.login(""))
+    alert("signout successfully!");
+    navigate("/")
+  }
 
   return (
     <div className='d-flex gap-3 align-items-center'>
@@ -28,7 +44,7 @@ const RightNav = () => {
 
       <Dropdown.Menu>
         <Dropdown.Item className='text-center' href="#/action-1">{email}</Dropdown.Item>
-        <p onClick={()=>localStorage.clear()} className='text-center bg-info ps-1 pe-1 d-flex m-auto text-white mt-4' style={{width:"fit-Content",cursor:"pointer"}}>sign out</p>
+        <p onClick={handleLogout} className='text-center bg-info ps-1 pe-1 d-flex m-auto text-white mt-4' style={{width:"fit-Content",cursor:"pointer"}}>sign out</p>
       </Dropdown.Menu>
     </Dropdown>
 
