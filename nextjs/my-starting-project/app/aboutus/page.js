@@ -1,0 +1,10 @@
+
+
+
+export default function AboutUs(){
+    return(
+        <>
+        <h1>this is an about-us page</h1>
+        </>
+    )
+}
