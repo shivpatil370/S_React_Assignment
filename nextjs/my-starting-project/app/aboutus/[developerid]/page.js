@@ -1,9 +1,9 @@
 import Link from "next/link";
 
 
+export default function Developer_Page({params}){
 
-export default function AboutUs(){
-   const details = [
+    const details = [
 
         { id : 1, name: 'Yash', role: 'Senior Developer'},
         
@@ -12,17 +12,22 @@ export default function AboutUs(){
         { id : 3, name: 'Suresh', role: 'Frontend Developer'}
         
         ];
-        
-        
-    return(
+
+
+    return (
         <>
-        <h1>this is an about-us page</h1>
+        <h1>I am Developer page</h1>
         <ul>
             {
+                
                 details?.map((ele)=>{
-                  return  <li key={ele.id}><Link href={`/aboutus/${ele.id}`}>{ele.name}</Link>
-          </li>
+                    // console.log(params.developerid);
+                    
+                    if(params?.developerid==ele?.id){
+                      return <li key={ele.id}>{ele.name} is {ele.role}</li>
+                  }
                 })
+            
             }
             
         </ul>
