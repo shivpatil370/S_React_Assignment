@@ -13,21 +13,26 @@ export default function Developer_Page({params}){
         
         ];
 
-
+        
     return (
         <>
         <h1>I am Developer page</h1>
         <ul>
             {
                 
+                
+                
                 details?.map((ele)=>{
                     // console.log(params.developerid);
-                    
+
                     if(params?.developerid==ele?.id){
+            
                       return <li key={ele.id}>{ele.name} is {ele.role}</li>
                   }
+                  
                 })
-            
+                
+                
             }
             
         </ul>
