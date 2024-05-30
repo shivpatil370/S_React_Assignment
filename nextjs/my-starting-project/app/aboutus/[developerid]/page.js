@@ -13,7 +13,7 @@ export default function Developer_Page({params}){
         
         ];
 
-        
+        let x=true;
     return (
         <>
         <h1>I am Developer page</h1>
@@ -24,8 +24,8 @@ export default function Developer_Page({params}){
                 
                 details?.map((ele)=>{
                     // console.log(params.developerid);
-
                     if(params?.developerid==ele?.id){
+                        x=false;
             
                       return <li key={ele.id}>{ele.name} is {ele.role}</li>
                   }
@@ -34,7 +34,7 @@ export default function Developer_Page({params}){
                 
                 
             }
-            
+            {x&&<li>Developer doesn't exist</li>}
         </ul>
         </>
     )
