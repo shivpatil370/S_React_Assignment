@@ -16,15 +16,20 @@ export default async function MeetupDetail({params}){
 
     // console.log(x);
 
-    const filter=x.find((ele)=>param==ele.id)
+    const filter=x.find((ele)=>param==ele.id);
 
     return(
+        <>
+        <title>Meetup Details</title>
+        <meta name="meetup" content="this is meetup page!"/>
+
         <MeetupDetails
         image={filter.image}
         title={filter.title}
         address={filter.address}
         description={filter.description}
         />
+        </>
     )
 }
 

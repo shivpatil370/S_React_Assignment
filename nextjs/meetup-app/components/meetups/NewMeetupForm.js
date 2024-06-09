@@ -28,6 +28,11 @@ function NewMeetupForm(props) {
   }
 
   return (
+    <>
+    <title>Meetup Form</title>
+        <meta name="meetup" content="this is meetup Form!"/>
+
+    
     <Card>
       <form className={classes.form} onSubmit={submitHandler}>
         <div className={classes.control}>
@@ -56,6 +61,7 @@ function NewMeetupForm(props) {
         </div>
       </form>
     </Card>
+    </>
   );
 }
 
