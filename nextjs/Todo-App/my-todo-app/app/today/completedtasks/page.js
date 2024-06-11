@@ -1,29 +1,14 @@
+// import CompletedTasks from "@/components/CompletedTasks"
 
 
 
-export default async function CompletedTasks(){
-    const todo=await getData();
-console.log(todo)
+
+export default function Complete_Details(){
+
     return(
-        <main style={{textAlign:"center"}}>
-        <h1>Completed Tasks!</h1>
-         
-         <ul>
-             {
-                todo.map((ele)=>{
-                    <li style={{color:"red"}} key={ele.id}>{ele.description}</li>
-                })
-             }
-         </ul>
-        </main>
+        <>
+        <h1>details</h1>
+       
+        </>
     )
-};
-
-
- async function getData(){
-
-    const res=await fetch("http://localhost:8080/todos");
-    const data=await res.json();
-
-    return data;
 }

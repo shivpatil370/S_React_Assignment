@@ -1,5 +1,7 @@
 "use server";
 
+import { getData, revalidate } from "./CompletedTasks";
+
 
 
 export async function handleSubmit(formData){
@@ -20,6 +22,8 @@ export async function handleSubmit(formData){
        })
        .then((data)=>{
           console.log(data);
-          SetDes("")
+          getData()
+         //  revalidate(1)
+         //  SetDes("")
        })
   }
