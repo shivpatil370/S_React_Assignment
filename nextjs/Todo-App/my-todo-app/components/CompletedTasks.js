@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import {useFormState} from "react-dom";
 
 export async function getData(){
 
@@ -19,7 +20,8 @@ export async function getData(){
 };
 
 export default async function CompletedTasks(){
-    
+    const [check,checkAction]=useFormState(false);
+
     // const res=await fetch("http://localhost:8080/todos");
     // const todo=await res.json();
     const todo=await getData();
@@ -56,7 +58,7 @@ export default async function CompletedTasks(){
          <ul>
              {
                 todo?.map((ele)=>{
-                  return <li style={{color:"red", marginBottom:"2rem"}} key={ele?.id}><input type="radio" />{ele?.description} <button onClick={()=>redirect(`/today/${ele.id}`)}>edit</button><button onClick={()=>handleDelete(ele.id)}>Delete</button></li>
+                  return <li style={{color:"red", marginBottom:"2rem"}} key={ele?.id}><input type="radio" value={check} checked={check==true} onChange={(e)=>checkAction(!check)}/>{ele?.description} <button onClick={()=>redirect(`/today/${ele.id}`)}>edit</button><button onClick={()=>handleDelete(ele.id)}>Delete</button></li>
                 })
              }
          </ul>
