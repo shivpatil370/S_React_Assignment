@@ -37,6 +37,16 @@ export default async function CompletedTasks(){
         // <Link href={`/today/${ele.id}`}/>
         
 //    }
+
+  function handleDelete(id){
+    
+        fetch(`http://localhost:8080/todos/${id}`,{
+            method:"DELETE",
+            headers:{ 
+                "Content-Type":"application/json"
+                }
+        })
+  }
  
 
     return(
@@ -46,7 +56,7 @@ export default async function CompletedTasks(){
          <ul>
              {
                 todo?.map((ele)=>{
-                  return <li style={{color:"red", marginBottom:"2rem"}} key={ele?.id}><input type="radio" />{ele?.description} <button onClick={()=>redirect(`/today/${ele.id}`)}>edit</button></li>
+                  return <li style={{color:"red", marginBottom:"2rem"}} key={ele?.id}><input type="radio" />{ele?.description} <button onClick={()=>redirect(`/today/${ele.id}`)}>edit</button><button onClick={()=>handleDelete(ele.id)}>Delete</button></li>
                 })
              }
          </ul>
